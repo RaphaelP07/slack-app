@@ -1,10 +1,12 @@
 import { useState } from "react";
 import slack from "../slack-logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmedPassword, setConfirmedPassword] = useState(null);
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +24,10 @@ const Register = () => {
         setConfirmedPassword(e.target.value);
         break;
     }
+  };
+
+  const onClick = (e) => {
+    navigate("/");
   };
 
   return (
@@ -74,7 +80,9 @@ const Register = () => {
                 onChange={onChange}
               ></input>
             </div>
-            <button className="btn-login">Sign Up</button>
+            <button className="btn-login" type="button" onClick={onClick}>
+              Sign Up
+            </button>
           </form>
           <div className="terms-register">
             <p>
@@ -85,7 +93,7 @@ const Register = () => {
         </div>
         <div className="registered">
           <p>Already got a Slack account?</p>
-          <a href="#">Sign in to an existing workspace</a>
+          <Link to="/">Sign in to an existing account</Link>
         </div>
       </div>
       <footer>

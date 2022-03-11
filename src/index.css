@@ -44,6 +44,10 @@ header {
   font-size: 13.5px;
 }
 
+.right-column a {
+  text-decoration: none;
+}
+
 main {
   display: flex;
   flex-direction: column;

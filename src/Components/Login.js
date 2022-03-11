@@ -1,9 +1,11 @@
 import slack from "../slack-logo.png";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +22,10 @@ const Login = () => {
     }
   };
 
+  const onClick = (e) => {
+    navigate("/setup");
+  };
+
   return (
     <div className="wrapper">
       <header>
@@ -29,7 +35,7 @@ const Login = () => {
         </div>
         <div className="right-column">
           <p> New to Slack?</p>
-          <a href="#">Create an account</a>
+          <Link to="/register"> Create an account </Link>
         </div>
       </header>
       <main>
@@ -65,7 +71,9 @@ const Login = () => {
                 onChange={onChange}
               ></input>
             </div>
-            <button className="btn-login">Sign In</button>
+            <button className="btn-login" type="button" onClick={onClick}>
+              Sign In
+            </button>
           </form>
         </div>
       </main>
