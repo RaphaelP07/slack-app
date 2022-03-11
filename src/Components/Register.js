@@ -1,33 +1,32 @@
 import { useState } from "react";
 import slack from "../slack-logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).max(12).required(),
+  confirmedPassword: yup.string().oneOf([yup.ref("password"), null]),
+});
 
 const Register = () => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmedPassword, setConfirmedPassword] = useState(null);
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const onChange = (e) => {
-    switch (e.target.id) {
-      case "email":
-        setEmail(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
-        break;
-      case "confirmedPassword":
-        setConfirmedPassword(e.target.value);
-        break;
+  const submitForm = (data) => {
+    if (data) {
+      console.log(data);
+      navigate("/");
     }
-  };
-
-  const onClick = (e) => {
-    navigate("/");
   };
 
   return (
@@ -50,37 +49,37 @@ const Register = () => {
           </div>
         </div>
         <div className="form-container-register">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit(submitForm)}>
             <div>
               <input
                 required
                 type="email"
                 id="email"
                 name="email"
-                value={email}
                 placeholder="name@work-email.com"
-                onChange={onChange}
+                {...register("email")}
               ></input>
+              <p>{errors.email?.message}</p>
               <input
                 required
                 type="passwowrd"
                 id="password"
                 name="password"
                 placeholder="password"
-                value={password}
-                onChange={onChange}
+                {...register("password")}
               ></input>
+              <p>{errors.password?.message}</p>
               <input
                 required
                 type="passwowrd"
                 id="password"
                 name="password"
                 placeholder="confirm password"
-                value={confirmedPassword}
-                onChange={onChange}
+                {...register("confirmedPassword")}
               ></input>
+              <p>{errors.confirmedPassword && "Password does not match"}</p>
             </div>
-            <button className="btn-login" type="button" onClick={onClick}>
+            <button className="btn-signup" type="submit">
               Sign Up
             </button>
           </form>

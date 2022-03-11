@@ -134,7 +134,8 @@ form input {
   height: 44px;
   line-height: 1.333333;
   padding: 11px 12px 13px;
-  margin: 0 0 20px;
+  /* margin: 0 0 20px; */
+  margin-top: 20px;
   font-size: 22px;
   border: 1px solid rgba(29, 28, 29, 0.3);
   border-radius: 4px;
@@ -150,6 +151,20 @@ form input {
   min-width: 96px;
   padding: 0 16px 3px;
   margin: 0 0 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-signup {
+  color: #fff;
+  background-color: #4a154b;
+  border-radius: 4px;
+  font-size: 22px;
+  font-weight: 900;
+  height: 44px;
+  min-width: 96px;
+  padding: 0 16px 3px;
+  margin-top: 20px;
   width: 100%;
   cursor: pointer;
 }
@@ -207,4 +222,9 @@ footer div {
   border: 1px solid rgba(29, 28, 29, 0.3);
   border-radius: 4px;
   color: rgb(129, 128, 128);
+}
+
+form div p {
+  font-size: 1rem;
+  color: red;
 }
