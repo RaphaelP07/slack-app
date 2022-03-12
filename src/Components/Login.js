@@ -9,6 +9,8 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const { users } = useContext(GlobalContext);
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -28,11 +30,19 @@ const Login = () => {
   const onClick = (e) => {
     console.log(users);
     let currentUser = users.filter((user) => {
-      return user.email === email && user.password === password;
+      return user.email === email;
     });
-    if (currentUser.length > 0) {
-      console.log(currentUser);
-      navigate("/setup");
+
+    if (currentUser.length <= 0) {
+      setEmailError("Email Address does not exist!");
+    } else {
+      if (currentUser.length > 0) {
+        if (currentUser[0].password !== password) {
+          setPasswordError("Incorrect password");
+        } else {
+          navigate("/setup");
+        }
+      }
     }
   };
 
@@ -71,6 +81,7 @@ const Login = () => {
                 value={email}
                 onChange={onChange}
               ></input>
+              <span>{emailError}</span>
               <input
                 required
                 type="password"
@@ -80,6 +91,7 @@ const Login = () => {
                 value={password}
                 onChange={onChange}
               ></input>
+              <span>{passwordError}</span>
             </div>
             <button className="btn-login" type="submit" onClick={onClick}>
               Sign In
