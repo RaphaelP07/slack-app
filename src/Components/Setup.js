@@ -2,7 +2,7 @@ import { useState } from "react";
 import slack from "../slack-logo.png";
 
 const Setup = () => {
-  const [gender, setGender] = useState("default");
+  // const [gender, setGender] = useState("default");
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [nickname, setNickname] = useState(null);
@@ -13,9 +13,9 @@ const Setup = () => {
 
   const onChange = (e) => {
     switch (e.target.id) {
-      case "gender":
-        setGender(e.target.value);
-        break;
+      // case "gender":
+      //   setGender(e.target.value);
+      //   break;
       case "firstName":
         setFirstName(e.target.value);
         break;
@@ -49,7 +49,7 @@ const Setup = () => {
         <div className="form-container-setup">
           <form onSubmit={onSubmit}>
             <div>
-              <select
+              {/* <select
                 defaultValue={gender}
                 id="gender"
                 onChange={onChange}
@@ -60,7 +60,7 @@ const Setup = () => {
                 </option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-              </select>
+              </select> */}
               <input
                 required
                 type="firstName"

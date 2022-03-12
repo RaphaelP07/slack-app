@@ -1,18 +1,21 @@
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Setup from "./Components/Setup";
-import ErrorPage from "./Components/ErrorPage";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Setup from "./components/Setup";
+import ErrorPage from "./components/ErrorPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { GlobalProvider } from "./context/GlobalState";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/setup" element={<Setup />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+      <GlobalProvider>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/setup" element={<Setup />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </GlobalProvider>
     </Router>
   );
 }

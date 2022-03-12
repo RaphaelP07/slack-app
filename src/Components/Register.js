@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import slack from "../slack-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { GlobalContext } from "../context/GlobalState";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -12,22 +13,25 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
+  const { users, addAccount } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const submitForm = (data) => {
-    if (data) {
-      console.log(data);
-      navigate("/");
-    }
-  };
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful, reset]);
+
+  if (isSubmitSuccessful) {
+    navigate("/");
+  }
 
   return (
     <div className="wrapper">
@@ -49,7 +53,7 @@ const Register = () => {
           </div>
         </div>
         <div className="form-container-register">
-          <form onSubmit={handleSubmit(submitForm)}>
+          <form onSubmit={handleSubmit(addAccount)}>
             <div>
               <input
                 required
@@ -62,7 +66,7 @@ const Register = () => {
               <p>{errors.email?.message}</p>
               <input
                 required
-                type="passwowrd"
+                type="password"
                 id="password"
                 name="password"
                 placeholder="password"
@@ -71,7 +75,7 @@ const Register = () => {
               <p>{errors.password?.message}</p>
               <input
                 required
-                type="passwowrd"
+                type="password"
                 id="password"
                 name="password"
                 placeholder="confirm password"

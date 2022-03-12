@@ -18,6 +18,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #f7f7f7;
 }
 
 header {
@@ -113,7 +114,7 @@ img {
 }
 
 .form-container {
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 
 .form-container-register {
@@ -150,7 +151,7 @@ form input {
   height: 44px;
   min-width: 96px;
   padding: 0 16px 3px;
-  margin: 0 0 20px;
+  margin-top: 20px;
   width: 100%;
   cursor: pointer;
 }

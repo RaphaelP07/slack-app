@@ -1,11 +1,14 @@
 import slack from "../slack-logo.png";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { users } = useContext(GlobalContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +26,14 @@ const Login = () => {
   };
 
   const onClick = (e) => {
-    navigate("/setup");
+    console.log(users);
+    let currentUser = users.filter((user) => {
+      return user.email === email && user.password === password;
+    });
+    if (currentUser.length > 0) {
+      console.log(currentUser);
+      navigate("/setup");
+    }
   };
 
   return (
@@ -63,7 +73,7 @@ const Login = () => {
               ></input>
               <input
                 required
-                type="passwowrd"
+                type="password"
                 id="password"
                 name="password"
                 placeholder="password"
@@ -71,7 +81,7 @@ const Login = () => {
                 onChange={onChange}
               ></input>
             </div>
-            <button className="btn-login" type="button" onClick={onClick}>
+            <button className="btn-login" type="submit" onClick={onClick}>
               Sign In
             </button>
           </form>
