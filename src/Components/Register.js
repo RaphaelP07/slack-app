@@ -63,7 +63,7 @@ const Register = () => {
                 placeholder="name@work-email.com"
                 {...register("email")}
               ></input>
-              <p>{errors.email?.message}</p>
+              <span>{errors.email?.message}</span>
               <input
                 required
                 type="password"
@@ -72,7 +72,7 @@ const Register = () => {
                 placeholder="password"
                 {...register("password")}
               ></input>
-              <p>{errors.password?.message}</p>
+              <span>{errors.password?.message}</span>
               <input
                 required
                 type="password"
@@ -81,7 +81,9 @@ const Register = () => {
                 placeholder="confirm password"
                 {...register("confirmedPassword")}
               ></input>
-              <p>{errors.confirmedPassword && "Password does not match"}</p>
+              <span>
+                {errors.confirmedPassword && "password does not match"}
+              </span>
             </div>
             <button className="btn-signup" type="submit">
               Sign Up
