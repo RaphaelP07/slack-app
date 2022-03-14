@@ -5,6 +5,11 @@ export default (state, action) => {
         ...state,
         users: [...state.users, action.payload],
       };
+    // case "ADD_PROFILE":
+    //   return {
+    //     ...state,
+    //     users: [],
+    //   };
     default:
       return state;
   }

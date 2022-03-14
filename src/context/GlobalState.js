@@ -1,26 +1,27 @@
 import React, { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
+import { v4 as uuidv4 } from "uuid";
 
 //Initial State
 const initialState = {
   users: [
     {
-      id: 15,
-      firstName: "Peter",
-      lastName: "Pedro",
-      email: "pepe@gmail.com",
-      nickname: "Petro",
-      password: "pedro123",
-      confirmedPassword: "pedro123",
+      email: "vince@gmail.com",
+      password: "vince123",
+      confirmedPassword: "vince123",
+      id: uuidv4(),
+      firstName: "Vince",
+      lastName: "Neri",
+      nickname: "vince001",
     },
     {
-      id: 25,
+      email: "anne@gmail.com",
+      password: "anne123",
+      confirmedPassword: "anne123",
+      id: uuidv4(),
       firstName: "Anne",
-      lastName: "Babae",
-      email: "babanne@gmail.com",
-      nickname: "bananer",
-      password: "anneb123",
-      confirmedPassword: "anneb123",
+      lastName: "Mayer",
+      nickname: "annemayer",
     },
   ],
 };
@@ -40,6 +41,13 @@ export const GlobalProvider = ({ children } = {}) => {
       payload: user,
     });
   }
+
+  // function addProfile(personalInfo) {
+  //   dispatch({
+  //     type: "ADD_PROFILE",
+  //     payload: personalInfo,
+  //   });
+  // }
 
   return (
     <GlobalContext.Provider

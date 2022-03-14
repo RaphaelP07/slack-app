@@ -76,8 +76,8 @@ const Register = () => {
               <input
                 required
                 type="password"
-                id="password"
-                name="password"
+                id="confirmedPassword"
+                name="confirmedPassword"
                 placeholder="confirm password"
                 {...register("confirmedPassword")}
               ></input>

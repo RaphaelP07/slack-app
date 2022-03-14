@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 
-const Login = () => {
+const Login = ({ loggedUser, setLoggedUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +28,6 @@ const Login = () => {
   };
 
   const onClick = (e) => {
-    console.log(users);
     let currentUser = users.filter((user) => {
       return user.email === email;
     });
@@ -41,6 +40,7 @@ const Login = () => {
           setPasswordError("Incorrect password");
         } else {
           navigate("/setup");
+          setLoggedUser(currentUser[0].email);
         }
       }
     }
