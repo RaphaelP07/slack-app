@@ -214,3 +214,28 @@ body {
   background-color: rgb(214, 214, 214);
   cursor: pointer;
 }
+
+.dashboard-header {
+  display: flex;
+  color: aliceblue;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sign-out {
+  background-color: rgb(168, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.sign-out:hover {
+  background-color: rgb(201, 67, 67);
+}
+
+.sign-out:active {
+  background-color: rgb(168, 0, 0);
+}

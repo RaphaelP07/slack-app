@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import Login from "./components/Login";
@@ -12,6 +12,10 @@ import { GlobalProvider } from './context/GlobalState';
 function App() {
   const [loggedUser, setLoggedUser] = useState("");
 
+  useEffect (() => {
+    localStorage.getItem("loggedUser") !== null && setLoggedUser(localStorage.getItem("loggedUser"))
+  }, [])
+
   return (
     <Router>
       <GlobalProvider>
@@ -20,7 +24,7 @@ function App() {
           <Route path="/slack-app/register" element={<Register />} />
           <Route path="/slack-app/setup" element={<Setup loggedUser={loggedUser} />} />
           <Route path="*" element={<ErrorPage />} />
-          <Route path='slack-app/dashboard' element={<Dashboard loggedUser={loggedUser}/>} />
+          <Route path="slack-app/dashboard" element={<Dashboard loggedUser={loggedUser}/>} />
         </Routes>
       </GlobalProvider>
     </Router>

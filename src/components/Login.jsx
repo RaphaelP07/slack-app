@@ -1,5 +1,5 @@
 import slack from "../slack-logo.png";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 
@@ -10,6 +10,10 @@ const Login = ({ loggedUser, setLoggedUser }) => {
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formError, setFormError] = useState(false);
+
+  useEffect (() => {
+    localStorage.getItem("loggedUser") !== null ? navigate("/slack-app/dashboard") : navigate("/slack-app")
+  }, [])
 
   const onChange = (e) => {
     switch (e.target.id) {
@@ -34,6 +38,7 @@ const Login = ({ loggedUser, setLoggedUser }) => {
       } else {
         navigate("/slack-app/dashboard")
         setLoggedUser(currentUser[0].email);
+        localStorage.setItem('loggedUser', currentUser[0].email)
       }
     }  
   }
