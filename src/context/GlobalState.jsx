@@ -12,7 +12,8 @@ const initialState = {
       allow_password_change: false,
       name: "Raphael Padua",
       nickname: "Raph",
-      image: null
+      image: null,
+      selected: false
     },
     {
       id: 1737,
@@ -22,7 +23,8 @@ const initialState = {
       allow_password_change: false,
       name: "John Nadal",
       nickname: "John",
-      image: null
+      image: null,
+      selected: false
     },
     {
       id: 1738,
@@ -32,7 +34,8 @@ const initialState = {
       allow_password_change: false,
       name: "Mark Escullar",
       nickname: "Mark",
-      image: null
+      image: null,
+      selected: false
     },
   ]
 }
