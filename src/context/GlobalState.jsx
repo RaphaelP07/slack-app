@@ -55,6 +55,20 @@ const initialState = {
       password: "anne123",
       selected: false
     },
+  ],
+  channels: [
+    {
+      id: uuidv4(),
+      name: "batch16",
+      user_ids: [],
+      selected: false
+    },
+    {
+      id: uuidv4(),
+      name: "group16",
+      user_ids: [],
+      selected: false
+    }
   ]
 }
 
@@ -73,11 +87,20 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function selectChat(id) {
+    dispatch({
+      type: "SELECT_CHAT",
+      payload: id
+    })
+  }
+
   return (
     <GlobalContext.Provider 
     value={{
         users: state.users,
+        channels: state.channels,
         addAccount,
+        selectChat
       }}>
       {children}
     </GlobalContext.Provider>
