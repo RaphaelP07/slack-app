@@ -52,7 +52,7 @@ const Login = ({ loggedUser, setLoggedUser }) => {
       <header>
         <div></div>
         <div className="center-column">
-          <Link to="/slack-app"> <img src={slack} alt="slack logo" /> </Link>
+          <img src={slack} alt="slack logo" onClick={() => window.location.reload()}/>
         </div>
         <div className="right-column">
         </div>

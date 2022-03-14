@@ -37,14 +37,12 @@ const Setup = ({ loggedUser }) => {
     }
   };
 
-  const addProfile = (profile) => {};
-
   return (
     <div className="wrapper">
       <header>
         <div></div>
         <div className="center-column">
-          <img src={slack} alt="slack logo" />
+          <Link to="/slack-app"> <img src={slack} alt="slack logo" /> </Link>
         </div>
         <div className="right-column"></div>
       </header>
