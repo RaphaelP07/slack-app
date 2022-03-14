@@ -6,6 +6,7 @@ import { GlobalContext } from '../context/GlobalState'
 const Channels = () => {
   const { channels, selectChat } = useContext(GlobalContext)
   const [rerender, setRerender] = useState(false)
+  const [showChannels, setShowChannels] = useState(false)
   
   useEffect(() => {
     return
@@ -20,15 +21,15 @@ const Channels = () => {
   return (
     <div className="side-bar-channels">
       <div className='section-title'>
-        <FontAwesomeIcon icon={ faCaretDown } className='floating-icon' />
-        <p className='title-text'> 
+        <FontAwesomeIcon icon={ faCaretDown } className={`floating-icon ${showChannels && 'rotate'}`} onClick={() => setShowChannels(!showChannels)} />
+        <p className='disable-highlight title-text' onClick={() => setShowChannels(!showChannels)}> 
           Channels
         </p>
       </div>
-      {channels.map(channel => 
+      {!showChannels && channels.map(channel => 
         <div key={channel.id} className={`channel-container ${channel.selected === true ? 'selected' : ''}`} onClick={() => select(channels.indexOf(channel), channel)} >
-          <div className='profile-icon'>{(channel.name.split(''))[0]}</div>
-          <p className="user">{channel.name}</p>
+          <div className='disable-highlight profile-icon'>{(channel.name.split(''))[0]}</div>
+          <p className="disable-highlight user">{channel.name}</p>
           <FontAwesomeIcon icon={ faXmark } className='x-icon' />
         </div>
       )}
