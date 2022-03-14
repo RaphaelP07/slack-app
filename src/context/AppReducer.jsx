@@ -1,11 +1,11 @@
-export default (state, action) =>{
-  switch(action.type) {
-    case 'ADD_ACCOUNT':
+export default (state, action) => {
+  switch (action.type) {
+    case "ADD_ACCOUNT":
       return {
         ...state,
-        accounts: [...state.accounts, action.payload]
-      }
+        users: [...state.users, action.payload],
+      };
     default:
-      return state
+      return state;
   }
-}
+};

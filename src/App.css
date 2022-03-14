@@ -20,7 +20,7 @@ body {
   grid-template-rows: max-content 1fr;
 }
 
-header {
+.main-container > header {
   width: 100vw;
   height: 38px;
   position: sticky;

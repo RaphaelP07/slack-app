@@ -1,40 +1,58 @@
 import React, { createContext, useReducer } from 'react'
 import AppReducer from './AppReducer'
+import { v4 as uuidv4 } from "uuid";
 
 // initial state
 const initialState = {
-  data: [
+  users: [
     {
-      id: 1736,
+      confirmedPassword: "raph123",
+      password: "raph123",
       email: "raph@example.com",
-      provider: "email",
-      uid: "raph@example.com",
-      allow_password_change: false,
-      name: "Raphael Padua",
+      firstName: "Raphael",
+      id: uuidv4(),
+      lastName: "Padua",
       nickname: "Raph",
-      image: null,
       selected: false
     },
     {
-      id: 1737,
+      confirmedPassword: "john123",
       email: "john@example.com",
-      provider: "email",
-      uid: "john@example.com",
-      allow_password_change: false,
-      name: "John Nadal",
+      firstName: "John",
+      id: uuidv4(),
+      lastName: "Nadal",
       nickname: "John",
-      image: null,
+      password: "john123",
       selected: false
     },
     {
-      id: 1738,
+      confirmedPassword: "mark123",
       email: "mark@example.com",
-      provider: "email",
-      uid: "mark@example.com",
-      allow_password_change: false,
-      name: "Mark Escullar",
+      firstName: "Mark",
+      id: uuidv4(),
+      lastName: "Escullar",
       nickname: "Mark",
-      image: null,
+      password: "mark123",
+      selected: false
+    },
+    {
+      confirmedPassword: "vince123",
+      email: "vince@gmail.com",
+      firstName: "Vince",
+      id: uuidv4(),
+      lastName: "Neri",
+      nickname: "vince001",
+      password: "vince123",
+      selected: false
+    },
+    {
+      confirmedPassword: "anne123",
+      email: "anne@gmail.com",
+      firstName: "Anne",
+      id: uuidv4(),
+      lastName: "Mayer",
+      nickname: "annemayer",
+      password: "anne123",
       selected: false
     },
   ]
@@ -48,17 +66,17 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState)
 
   //Actions
-  function addAccount(account) {
+  function addAccount(user) {
     dispatch({
-      type: 'ADD_ACCOUNT',
-      payload: account
-    })
+      type: "ADD_ACCOUNT",
+      payload: user,
+    });
   }
 
   return (
     <GlobalContext.Provider 
     value={{
-        data: state.data,
+        users: state.users,
         addAccount,
       }}>
       {children}
