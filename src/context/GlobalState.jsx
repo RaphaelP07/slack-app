@@ -1,5 +1,5 @@
-import React, { createContext, useReducer } from 'react'
-import AppReducer from './AppReducer'
+import React, { createContext, useReducer } from "react";
+import AppReducer from "./AppReducer";
 import { v4 as uuidv4 } from "uuid";
 
 // initial state
@@ -13,7 +13,7 @@ const initialState = {
       id: uuidv4(),
       lastName: "Padua",
       nickname: "Raph",
-      selected: false
+      selected: false,
     },
     {
       confirmedPassword: "john123",
@@ -23,7 +23,7 @@ const initialState = {
       lastName: "Nadal",
       nickname: "John",
       password: "john123",
-      selected: false
+      selected: false,
     },
     {
       confirmedPassword: "mark123",
@@ -33,7 +33,7 @@ const initialState = {
       lastName: "Escullar",
       nickname: "Mark",
       password: "mark123",
-      selected: false
+      selected: false,
     },
     {
       confirmedPassword: "vince123",
@@ -43,17 +43,14 @@ const initialState = {
       lastName: "Neri",
       nickname: "vince001",
       password: "vince123",
-      selected: false
+      selected: false,
     },
     {
       confirmedPassword: "anne123",
       email: "anne@gmail.com",
-      firstName: "Anne",
       id: uuidv4(),
-      lastName: "Mayer",
-      nickname: "annemayer",
       password: "anne123",
-      selected: false
+      selected: false,
     },
   ],
   channels: [
@@ -61,23 +58,23 @@ const initialState = {
       id: uuidv4(),
       name: "batch16",
       user_ids: [],
-      selected: false
+      selected: false,
     },
     {
       id: uuidv4(),
       name: "group16",
       user_ids: [],
-      selected: false
-    }
-  ]
-}
+      selected: false,
+    },
+  ],
+};
 
 // create context
-export const GlobalContext = createContext(initialState)
+export const GlobalContext = createContext(initialState);
 
 // provider component
 export const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AppReducer, initialState)
+  const [state, dispatch] = useReducer(AppReducer, initialState);
 
   //Actions
   function addAccount(user) {
@@ -90,19 +87,20 @@ export const GlobalProvider = ({ children }) => {
   function selectChat(id) {
     dispatch({
       type: "SELECT_CHAT",
-      payload: id
-    })
+      payload: id,
+    });
   }
 
   return (
-    <GlobalContext.Provider 
-    value={{
+    <GlobalContext.Provider
+      value={{
         users: state.users,
         channels: state.channels,
         addAccount,
-        selectChat
-      }}>
+        selectChat,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
-  )
-}
+  );
+};

@@ -2,13 +2,14 @@ import { useState, useContext } from "react";
 import slack from "../slack-logo.png";
 import { GlobalContext } from "../context/GlobalState";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Setup = ({ loggedUser }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickname, setNickname] = useState("");
   const { users } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,12 +17,21 @@ const Setup = ({ loggedUser }) => {
     let currentUser = users.filter((user) => {
       return user.email === loggedUser;
     });
+    console.log(currentUser);
     currentUser[0].id = uuidv4();
     currentUser[0].firstName = firstName;
     currentUser[0].lastName = lastName;
     currentUser[0].nickname = nickname;
     console.log(currentUser);
     console.log(users);
+
+    if (
+      currentUser[0].hasOwnProperty("firstName") === true &&
+      currentUser[0].hasOwnProperty("lastName") === true &&
+      currentUser[0].hasOwnProperty("nickname") === true
+    ) {
+      navigate("/slack-app/dashboard");
+    }
   };
 
   const onChange = (e) => {
@@ -43,7 +53,10 @@ const Setup = ({ loggedUser }) => {
       <header>
         <div></div>
         <div className="center-column">
-          <Link to="/slack-app"> <img src={slack} alt="slack logo" /> </Link>
+          <Link to="/slack-app">
+            {" "}
+            <img src={slack} alt="slack logo" />{" "}
+          </Link>
         </div>
         <div className="right-column"></div>
       </header>

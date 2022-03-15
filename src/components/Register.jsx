@@ -5,6 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { GlobalContext } from "../context/GlobalState";
 import slack from "../slack-logo.png";
 import * as yup from "yup";
+import axios from "axios";
+
+const baseURL = "http://206.189.91.54/api/v1/";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -20,6 +23,7 @@ const Register = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
@@ -30,15 +34,46 @@ const Register = () => {
   }, [isSubmitSuccessful, reset]);
 
   if (isSubmitSuccessful) {
+    const values = getValues();
+    console.log(values);
+    axios
+      .post(`${baseURL}auth?`, {
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.confirmPass,
+        mode: "no-cors",
+      })
+      .then((res) => {
+        console.log(res);
+      });
     navigate("/slack-app");
   }
+
+  const onSubmit = (form, e) => {
+    e.preventDefault();
+
+    const values = getValues();
+    console.log(values);
+    axios
+      .post(`${baseURL}auth?`, {
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.confirmPass,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <div className="wrapper">
       <header>
         <div></div>
         <div className="center-column">
-        <Link to="/slack-app"> <img src={slack} alt="slack logo" /> </Link>
+          <Link to="/slack-app">
+            {" "}
+            <img src={slack} alt="slack logo" />{" "}
+          </Link>
         </div>
         <div className="right-column"></div>
       </header>
@@ -53,7 +88,7 @@ const Register = () => {
           </div>
         </div>
         <div className="form-container-register">
-          <form onSubmit={handleSubmit(addAccount)} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
               <input
                 required
@@ -98,9 +133,9 @@ const Register = () => {
         </div>
       </div>
       <div className="registered">
-          <p>Already got a Slack account?</p>
-          <Link to="/slack-app">Sign in to an existing account</Link>
-        </div>
+        <p>Already got a Slack account?</p>
+        <Link to="/slack-app">Sign in to an existing account</Link>
+      </div>
       <footer>
         <div>Privacy & Terms</div>
         <div>Contact Us</div>
