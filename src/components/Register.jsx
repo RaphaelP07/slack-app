@@ -25,44 +25,41 @@ const Register = () => {
     reset,
     getValues,
     formState: { errors, isSubmitSuccessful },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
-
-  if (isSubmitSuccessful) {
-    const values = getValues();
-    console.log(values);
-    axios
-      .post(`${baseURL}auth?`, {
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.confirmPass,
-        mode: "no-cors",
-      })
-      .then((res) => {
-        console.log(res);
-      });
-    navigate("/slack-app");
-  }
+    if (isSubmitSuccessful) {
+      const values = getValues();
+      console.log(values);
+      axios
+        .post(`${baseURL}auth?`, {
+          email: values.email,
+          password: values.password,
+          password_confirmation: values.confirmPass,
+          mode: "no-cors",
+        })
+        .then((res) => {
+          console.log("1st parameter", res);
+          navigate("/slack-app");
+        })
+        .catch((error) => {
+          console.log("2nd parameter", error.response.data.errors);
+          const { full_messages, ...errors } = error.response.data.errors;
+          Object.keys(errors).forEach((name) => {
+            setError(name, {
+              type: "manual",
+              message: error.response.data.errors.full_messages[0],
+            });
+          });
+        });
+    }
+  }, [isSubmitSuccessful]);
 
   const onSubmit = (form, e) => {
     e.preventDefault();
-
-    const values = getValues();
-    console.log(values);
-    axios
-      .post(`${baseURL}auth?`, {
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.confirmPass,
-      })
-      .then((res) => {
-        console.log(res);
-      });
   };
 
   return (
