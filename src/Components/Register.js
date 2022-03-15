@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import slack from "../slack-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
-  const { users, addAccount } = useContext(GlobalContext);
+  const { addAccount } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {

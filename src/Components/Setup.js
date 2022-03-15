@@ -41,8 +41,6 @@ const Setup = ({ loggedUser }) => {
     }
   };
 
-  const addProfile = (profile) => {};
-
   return (
     <div className="wrapper">
       <header>
