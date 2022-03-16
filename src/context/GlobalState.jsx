@@ -91,7 +91,7 @@ export const GlobalProvider = ({ children, headers }) => {
         addAccount(res.data.data)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [state.headers])
   
 
   //Actions
