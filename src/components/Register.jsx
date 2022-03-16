@@ -16,13 +16,12 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
-  const { users, addAccount } = useContext(GlobalContext);
+  // const { users, addAccount } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    reset,
     getValues,
     formState: { errors, isSubmitSuccessful },
     setError,
@@ -42,11 +41,9 @@ const Register = () => {
           mode: "no-cors",
         })
         .then((res) => {
-          console.log("1st parameter", res);
           navigate("/slack-app");
         })
         .catch((error) => {
-          console.log("2nd parameter", error.response.data.errors);
           const { full_messages, ...errors } = error.response.data.errors;
           Object.keys(errors).forEach((name) => {
             setError(name, {

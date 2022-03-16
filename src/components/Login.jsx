@@ -35,14 +35,12 @@ const Login = ({ loggedUser, setLoggedUser }) => {
       setFormError(true);
       return;
     } else {
+      setLoggedUser(currentUser[0].email);
+      localStorage.setItem("loggedUser", currentUser[0].email);
       if (currentUser[0].hasOwnProperty("firstName") === false) {
         navigate("/slack-app/setup");
-        setLoggedUser(currentUser[0].email);
-        localStorage.setItem("loggedUser", currentUser[0].email);
       } else {
         navigate("/slack-app/dashboard");
-        setLoggedUser(currentUser[0].email);
-        localStorage.setItem("loggedUser", currentUser[0].email);
       }
     }
   };
