@@ -2,10 +2,11 @@ import slack from "../slack-logo.png";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
+import axios from 'axios'
 
 const Login = ({ loggedUser, setLoggedUser }) => {
   const navigate = useNavigate();
-  const { users } = useContext(GlobalContext);
+  const { users, baseURL, setHeaders } = useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,18 +32,35 @@ const Login = ({ loggedUser, setLoggedUser }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (currentUser.length === 0 || password !== currentUser[0].password) {
-      setFormError(true);
-      return;
-    } else {
-      setLoggedUser(currentUser[0].email);
-      localStorage.setItem("loggedUser", currentUser[0].email);
-      if (currentUser[0].hasOwnProperty("firstName") === false) {
-        navigate("/slack-app/setup");
-      } else {
+    axios
+      .post(`${baseURL}auth/sign_in?`, {
+        email: email,
+        password: password,
+        mode: "no-cors",
+      })
+      .then((res) => {
+        console.log(res)
+        const headersObj = {
+          ['access-token']: Object.values(res.headers)[0],
+          client: res.headers.client,
+          expiry: res.headers.expiry,
+          uid: res.headers.uid
+        }
+        setHeaders(headersObj)
+        setLoggedUser(email);
+        localStorage.setItem("loggedUser", email);
+        localStorage.setItem("headers", JSON.stringify(headersObj));
         navigate("/slack-app/dashboard");
-      }
-    }
+      })
+      // .catch((error) => {
+      //   const { full_messages, ...errors } = error.response.data.errors;
+      //   Object.keys(errors).forEach((name) => {
+      //     setError(name, {
+      //       type: "manual",
+      //       message: error.response.data.errors.full_messages[0],
+      //     });
+      //   });
+      // });
   };
 
   let currentUser = users.filter((user) => {

@@ -21,6 +21,11 @@ export default (state, action) => {
       return {
         ...state,
       }
+      case 'SET_HEADERS':
+        return {
+          ...state,
+          headers: action.payload
+        }
     default:
       return state;
   }

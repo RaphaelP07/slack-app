@@ -7,16 +7,14 @@ import slack from "../slack-logo.png";
 import * as yup from "yup";
 import axios from "axios";
 
-const baseURL = "http://206.189.91.54/api/v1/";
-
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().min(6).max(12).required(),
+  password: yup.string(),
   confirmedPassword: yup.string().oneOf([yup.ref("password"), null]),
 });
 
 const Register = () => {
-  // const { users, addAccount } = useContext(GlobalContext);
+  const { users, addAccount, baseURL } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {
@@ -28,6 +26,8 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  console.log(errors)
 
   useEffect(() => {
     if (isSubmitSuccessful) {

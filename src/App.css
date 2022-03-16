@@ -63,6 +63,7 @@ body {
   grid-row-end: 3;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 
 .section-title {
