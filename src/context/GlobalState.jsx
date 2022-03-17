@@ -55,21 +55,24 @@ const initialState = {
     // },
   ],
   channels: [
-    {
-      id: uuidv4(),
-      name: "batch16",
-      user_ids: [],
-      selected: false,
-    },
-    {
-      id: uuidv4(),
-      name: "group16",
-      user_ids: [],
-      selected: false,
-    },
+    // {
+    //   id: uuidv4(),
+    //   name: "batch16",
+    //   user_ids: [],
+    //   selected: false,
+    // },
+    // {
+    //   id: uuidv4(),
+    //   name: "group16",
+    //   user_ids: [],
+    //   selected: false,
+    // },
   ],
   // headers: {}
-  headers: localStorage.getItem("headers") === null ? {} : localStorage.getItem("headers")
+  headers:
+    localStorage.getItem("headers") === null
+      ? {}
+      : localStorage.getItem("headers"),
 };
 
 // create context
@@ -82,23 +85,42 @@ export const GlobalProvider = ({ children, headers }) => {
 
   useEffect(() => {
     axios({
-      method: 'get',
-      url: 'http://206.189.91.54/api/v1/users',
-      headers: state.headers
+      method: "get",
+      url: "http://206.189.91.54/api/v1/users",
+      headers: state.headers,
     })
-      .then(res => {
-        console.log(res.data.data)
-        addAccount(res.data.data)
+      .then((res) => {
+        // console.log(res.data.data);
+        addAccount(res.data.data);
       })
-      .catch(err => console.log(err))
-  }, [state.headers])
-  
+      .catch((err) => console.log(err));
+  }, [state.headers]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://206.189.91.54/api/v1/channels",
+      headers: state.headers,
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        addChannel(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [state.headers]);
 
   //Actions
   function addAccount(user) {
     dispatch({
       type: "ADD_ACCOUNT",
       payload: user,
+    });
+  }
+
+  function addChannel(channel) {
+    dispatch({
+      type: "ADD_CHANNEL",
+      payload: channel,
     });
   }
 
@@ -112,8 +134,8 @@ export const GlobalProvider = ({ children, headers }) => {
   function setHeaders(headers) {
     dispatch({
       type: "SET_HEADERS",
-      payload: headers
-    })
+      payload: headers,
+    });
   }
 
   return (
@@ -124,7 +146,7 @@ export const GlobalProvider = ({ children, headers }) => {
         baseURL: baseURL,
         addAccount,
         selectChat,
-        setHeaders
+        setHeaders,
       }}
     >
       {children}

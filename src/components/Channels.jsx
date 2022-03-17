@@ -1,9 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faXmark,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 
-const Channels = () => {
+const Channels = ({ setButtonPopup }) => {
   const { channels, selectChat } = useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
@@ -16,6 +20,10 @@ const Channels = () => {
     channel.selected = !channel.selected;
     setRerender(!rerender);
     selectChat(channel.id);
+  };
+
+  const showPopup = () => {
+    setButtonPopup(true);
   };
 
   return (
@@ -32,9 +40,15 @@ const Channels = () => {
         >
           Channels
         </p>
+        <FontAwesomeIcon
+          icon={faPlus}
+          className={"add-channel-button"}
+          onClick={showPopup}
+        />
       </div>
       {!showChannels &&
-        channels.map((channel) => (
+        channels.length > 0 &&
+        channels[0].map((channel) => (
           <div
             key={channel.id}
             className={`channel-container ${
