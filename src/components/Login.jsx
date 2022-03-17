@@ -2,18 +2,20 @@ import slack from "../slack-logo.png";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
+import axios from "axios";
 
-const Login = ({ loggedUser, setLoggedUser }) => {
+const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
   const navigate = useNavigate();
-  const { users } = useContext(GlobalContext);
+  const { users, baseURL, setHeaders } = useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formError, setFormError] = useState(false);
 
-  useEffect (() => {
-    localStorage.getItem("loggedUser") !== null ? navigate("/slack-app/dashboard") : navigate("/slack-app")
-  }, [])
+  useEffect(() => {
+    localStorage.getItem("loggedUser") !== null
+      ? navigate("/slack-app/dashboard")
+      : navigate("/slack-app");
+  }, []);
 
   const onChange = (e) => {
     switch (e.target.id) {
@@ -28,21 +30,41 @@ const Login = ({ loggedUser, setLoggedUser }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    if (currentUser.length === 0 || password !== currentUser[0].password) {
-      setFormError(true);
-      return
-    } else {
-      if (currentUser[0].hasOwnProperty('firstName') === false) {
-        navigate("/slack-app/setup");
-      } else {
-        navigate("/slack-app/dashboard")
-        setLoggedUser(currentUser[0].email);
-        localStorage.setItem('loggedUser', currentUser[0].email)
-      }
-    }  
-  }
-    
+
+    axios
+      .post(`${baseURL}auth/sign_in?`, {
+        email: email,
+        password: password,
+        mode: "no-cors",
+      })
+      .then((res) => {
+        // console.log(res);
+        const headersObj = {
+          ["access-token"]: Object.values(res.headers)[0],
+          client: res.headers.client,
+          expiry: res.headers.expiry,
+          uid: res.headers.uid,
+        };
+        const id = res.data.data.id;
+        setHeaders(headersObj);
+        setLoggedUser(email);
+        setLoggedID(id);
+        localStorage.setItem("loggedID", id);
+        localStorage.setItem("loggedUser", email);
+        localStorage.setItem("headers", JSON.stringify(headersObj));
+        navigate("/slack-app/dashboard");
+      });
+    // .catch((error) => {
+    //   const { full_messages, ...errors } = error.response.data.errors;
+    //   Object.keys(errors).forEach((name) => {
+    //     setError(name, {
+    //       type: "manual",
+    //       message: error.response.data.errors.full_messages[0],
+    //     });
+    //   });
+    // });
+  };
+
   let currentUser = users.filter((user) => {
     return user.email === email;
   });
@@ -52,10 +74,13 @@ const Login = ({ loggedUser, setLoggedUser }) => {
       <header>
         <div></div>
         <div className="center-column">
-          <img src={slack} alt="slack logo" onClick={() => window.location.reload()}/>
+          <img
+            src={slack}
+            alt="slack logo"
+            onClick={() => window.location.reload()}
+          />
         </div>
-        <div className="right-column">
-        </div>
+        <div className="right-column"></div>
       </header>
       <main>
         <div className="sub-header">
@@ -89,7 +114,9 @@ const Login = ({ loggedUser, setLoggedUser }) => {
                 value={password}
                 onChange={onChange}
               ></input>
-              <span className={formError === false ? "visibility-hidden" : ""}>Incorrect email or password</span>
+              <span className={formError === false ? "visibility-hidden" : ""}>
+                Incorrect email or password
+              </span>
             </div>
             <button className="btn-login" type="submit">
               Sign In
@@ -98,9 +125,9 @@ const Login = ({ loggedUser, setLoggedUser }) => {
         </div>
       </main>
       <div className="registered">
-          <p> New to Slack?</p>
-          <Link to="/slack-app/register"> Create an account </Link>
-        </div>
+        <p> New to Slack?</p>
+        <Link to="/slack-app/register"> Create an account </Link>
+      </div>
       <footer>
         <div>Privacy & Terms</div>
         <div>Contact Us</div>

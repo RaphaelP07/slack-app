@@ -1,34 +1,42 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { GlobalContext } from '../context/GlobalState'
 
 const Chat = () => {
   const { users, channels } = useContext(GlobalContext)
+  const [ getCompleted,  setGetCompleted ] = useState(false)
+  
+  useEffect(() => {
+    if (users.length === 1) {
+      setGetCompleted(true)
+    }
+  }, [users.length])
 
-  const receivers = users.concat(channels)
+  const receivers = getCompleted && users[0].concat(channels[0])
 
-  const receiver = receivers.filter(receiver => {
+  
+  const receiver = getCompleted && receivers.filter(receiver => {
     return receiver.selected === true
   })
 
+  console.log(receiver.length)
+
   return (
     <div className="chat-container">
+      {receiver.length === undefined ? '' :
       <div className='chat-header'>
-        {receiver.length === 0 ? '' :
+          {receiver.length === 0 ? '' : 
           <>
             <div className='profile-icon'>
-              {receiver[0].nickname !== undefined ? (receiver[0].nickname.split(''))[0] : ''}
-              {receiver[0].name !== undefined ? (receiver[0].name.split(''))[0] : ''}
+              {receiver[0].hasOwnProperty('email') === true ? receiver[0].email.split('')[0] : receiver[0].name.split('')[0]}
             </div>
             <strong className="user chat-header-name">
-              {receiver[0].nickname}
-              {receiver[0].name}
+              {receiver[0].hasOwnProperty('email') === true ? receiver[0].email : receiver[0].name }
             </strong>
             <FontAwesomeIcon icon={ faAngleDown } className='chat-icon' />
-          </>
-        }
-      </div>
+          </>}
+      </div>}
       <div className="chat-history">
       </div>
       <div className="chat-input-container">

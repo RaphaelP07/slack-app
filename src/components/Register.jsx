@@ -5,40 +5,69 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { GlobalContext } from "../context/GlobalState";
 import slack from "../slack-logo.png";
 import * as yup from "yup";
+import axios from "axios";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().min(6).max(12).required(),
+  password: yup.string(),
   confirmedPassword: yup.string().oneOf([yup.ref("password"), null]),
 });
 
 const Register = () => {
-  const { users, addAccount } = useContext(GlobalContext);
+  const { users, addAccount, baseURL } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    reset,
+    getValues,
     formState: { errors, isSubmitSuccessful },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
+  console.log(errors)
 
-  if (isSubmitSuccessful) {
-    navigate("/slack-app");
-  }
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      const values = getValues();
+      console.log(values);
+      axios
+        .post(`${baseURL}auth?`, {
+          email: values.email,
+          password: values.password,
+          password_confirmation: values.confirmPass,
+          mode: "no-cors",
+        })
+        .then((res) => {
+          navigate("/slack-app");
+        })
+        .catch((error) => {
+          const { full_messages, ...errors } = error.response.data.errors;
+          Object.keys(errors).forEach((name) => {
+            setError(name, {
+              type: "manual",
+              message: error.response.data.errors.full_messages[0],
+            });
+          });
+        });
+    }
+  }, [isSubmitSuccessful]);
+
+  const onSubmit = (form, e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="wrapper">
       <header>
         <div></div>
         <div className="center-column">
-        <Link to="/slack-app"> <img src={slack} alt="slack logo" /> </Link>
+          <Link to="/slack-app">
+            {" "}
+            <img src={slack} alt="slack logo" />{" "}
+          </Link>
         </div>
         <div className="right-column"></div>
       </header>
@@ -53,7 +82,7 @@ const Register = () => {
           </div>
         </div>
         <div className="form-container-register">
-          <form onSubmit={handleSubmit(addAccount)} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
               <input
                 required
@@ -98,9 +127,9 @@ const Register = () => {
         </div>
       </div>
       <div className="registered">
-          <p>Already got a Slack account?</p>
-          <Link to="/slack-app">Sign in to an existing account</Link>
-        </div>
+        <p>Already got a Slack account?</p>
+        <Link to="/slack-app">Sign in to an existing account</Link>
+      </div>
       <footer>
         <div>Privacy & Terms</div>
         <div>Contact Us</div>

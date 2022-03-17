@@ -9,7 +9,7 @@ const Header = () => {
           <img src={logo} className="slack-logo" alt="slack-logo" onClick={() => window.location.reload()}/>
       </div>
       <Link to="/slack-app">
-        <button className='sign-out' onClick={() => localStorage.removeItem('loggedUser')}>Sign Out</button>
+        <button className='sign-out' onClick={() => localStorage.clear()}>Sign Out</button>
       </Link>
     </header>
   )

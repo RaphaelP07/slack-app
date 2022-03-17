@@ -1,20 +1,50 @@
-import React from 'react'
-import Header from './Header'
-import SideBar from './SideBar'
-import Chat from './Chat'
-import ErrorPage from './ErrorPage'
+import React from "react";
+import Header from "./Header";
+import SideBar from "./SideBar";
+import Chat from "./Chat";
+import ErrorPage from "./ErrorPage";
+import { useEffect, useContext } from "react";
+import axios from "axios";
+import { GlobalContext } from "../context/GlobalState";
 
-const Dashboard = ({ loggedUser }) => {
-  return (
-    loggedUser === '' ?
+const Dashboard = ({ loggedUser, loggedID }) => {
+  const { headers, addAccount, addChannel } = useContext(GlobalContext);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://206.189.91.54/api/v1/users",
+      headers: headers,
+    })
+      .then((res) => {
+        // console.log(res.data.data);
+        addAccount(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://206.189.91.54/api/v1/channels",
+      headers: headers,
+    }).then((res) => {
+      // console.log(res.data.data);
+      addChannel(res.data.data);
+    });
+    // .catch((err) =>
+    // console.log(err)
+    // );
+  }, []);
+
+  return loggedUser === "" ? (
     <ErrorPage />
-    :
+  ) : (
     <div className="main-container">
       <Header />
       <SideBar />
       <Chat />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
