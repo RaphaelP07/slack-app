@@ -25,6 +25,7 @@ export default (state, action) => {
       });
       return {
         ...state,
+        channels: [...state.channels, action.payload],
       };
     case "SET_HEADERS":
       return {
