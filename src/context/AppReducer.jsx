@@ -11,13 +11,13 @@ export default (state, action) => {
         channels: [...state.channels, action.payload],
       };
     case "SELECT_CHAT":
-      const newChannels = state.channels;
+      const newChannels = state.channels[0];
       newChannels.forEach((channel) => {
         if (channel.id !== action.payload) {
           channel.selected = false;
         }
       });
-      const newUsers = state.users;
+      const newUsers = state.users[0];
       newUsers.forEach((user) => {
         if (user.id !== action.payload) {
           user.selected = false;
@@ -25,7 +25,6 @@ export default (state, action) => {
       });
       return {
         ...state,
-        channels: [...state.channels, action.payload],
       };
     case "SET_HEADERS":
       return {

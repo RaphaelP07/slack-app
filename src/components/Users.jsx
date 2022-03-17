@@ -13,8 +13,8 @@ const Users = () => {
     return;
   }, [rerender]);
 
-  const select = (index, user) => {
-    user.selected = !user.selected;
+  const select = (user) => {
+    user.selected = true;
     setRerender(!rerender);
     selectChat(user.id);
   };
@@ -42,7 +42,7 @@ const Users = () => {
             className={`user-container ${
               user.selected === true ? "selected" : ""
             }`}
-            onClick={() => select(users.indexOf(user), user)}
+            onClick={() => select(user)}
           >
             <div className="disable-highlight profile-icon">
               {user.email.split("")[0]}

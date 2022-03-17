@@ -1,15 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faXmark,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faXmark, faPlus,} from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
 
 const Channels = () => {
-  const { channels, selectChat } = useContext(GlobalContext);
+  const { users, channels, selectChat } = useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
   const navigate = useNavigate();
@@ -18,8 +14,8 @@ const Channels = () => {
     return;
   }, [rerender]);
 
-  const select = (index, channel) => {
-    channel.selected = !channel.selected;
+  const select = (channel) => {
+    channel.selected = true;
     setRerender(!rerender);
     selectChat(channel.id);
   };
@@ -56,7 +52,7 @@ const Channels = () => {
             className={`channel-container ${
               channel.selected === true ? "selected" : ""
             }`}
-            onClick={() => select(channels.indexOf(channel), channel)}
+            onClick={() => select(channel)}
           >
             <div className="disable-highlight profile-icon">
               {channel.name.split("")[0]}
