@@ -6,11 +6,13 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
+import { useNavigate } from "react-router-dom";
 
-const Channels = ({ setButtonPopup }) => {
+const Channels = () => {
   const { channels, selectChat } = useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     return;
@@ -23,7 +25,7 @@ const Channels = ({ setButtonPopup }) => {
   };
 
   const showPopup = () => {
-    setButtonPopup(true);
+    navigate("/slack-app/popup");
   };
 
   return (

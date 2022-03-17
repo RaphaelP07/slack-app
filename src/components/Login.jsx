@@ -2,14 +2,13 @@ import slack from "../slack-logo.png";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
-import axios from 'axios'
+import axios from "axios";
 
-const Login = ({ loggedUser, setLoggedUser }) => {
+const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
   const navigate = useNavigate();
   const { users, baseURL, setHeaders } = useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formError, setFormError] = useState(false);
 
   useEffect(() => {
@@ -39,28 +38,31 @@ const Login = ({ loggedUser, setLoggedUser }) => {
         mode: "no-cors",
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res);
         const headersObj = {
-          ['access-token']: Object.values(res.headers)[0],
+          ["access-token"]: Object.values(res.headers)[0],
           client: res.headers.client,
           expiry: res.headers.expiry,
-          uid: res.headers.uid
-        }
-        setHeaders(headersObj)
+          uid: res.headers.uid,
+        };
+        const id = res.data.data.id;
+        setHeaders(headersObj);
         setLoggedUser(email);
+        setLoggedID(id);
+        localStorage.setItem("loggedID", id);
         localStorage.setItem("loggedUser", email);
         localStorage.setItem("headers", JSON.stringify(headersObj));
         navigate("/slack-app/dashboard");
-      })
-      // .catch((error) => {
-      //   const { full_messages, ...errors } = error.response.data.errors;
-      //   Object.keys(errors).forEach((name) => {
-      //     setError(name, {
-      //       type: "manual",
-      //       message: error.response.data.errors.full_messages[0],
-      //     });
-      //   });
-      // });
+      });
+    // .catch((error) => {
+    //   const { full_messages, ...errors } = error.response.data.errors;
+    //   Object.keys(errors).forEach((name) => {
+    //     setError(name, {
+    //       type: "manual",
+    //       message: error.response.data.errors.full_messages[0],
+    //     });
+    //   });
+    // });
   };
 
   let currentUser = users.filter((user) => {
