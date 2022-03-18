@@ -175,6 +175,7 @@ body {
 .chat-history {
   grid-row-start: 2;
   grid-row-end: 3;
+  padding: 5px 10px 0px 10px;
 }
 
 .chat-input-container {
@@ -221,6 +222,24 @@ body {
   color: aliceblue;
   justify-content: space-between;
   align-items: center;
+}
+
+.add-member {
+  background-color: rgb(31, 93, 187);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.add-member:hover {
+  background-color: rgb(77, 148, 253);
+}
+
+.add-member:active {
+  background-color: rgb(31, 93, 187);
 }
 
 .sign-out {
@@ -274,4 +293,26 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.message-container {
+  border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+}
+
+.message-date {
+  color: grey;
+  font-weight: 300;
+  font-size: 13px;
+  margin-left: 5px;
+  position: relative;
+  top: 1px
+}
+
+.message-body {
+  font-size: 14px;
 }
