@@ -34,7 +34,7 @@ const Register = () => {
       const values = getValues();
       console.log(values);
       axios
-        .post(`${baseURL}auth?`, {
+        .post(`${baseURL}/auth?`, {
           email: values.email,
           password: values.password,
           password_confirmation: values.confirmPass,

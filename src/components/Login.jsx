@@ -32,7 +32,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
     e.preventDefault();
 
     axios
-      .post(`${baseURL}auth/sign_in?`, {
+      .post(`${baseURL}/auth/sign_in?`, {
         email: email,
         password: password,
         mode: "no-cors",
@@ -43,7 +43,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
           ["access-token"]: Object.values(res.headers)[0],
           client: res.headers.client,
           expiry: res.headers.expiry,
-          uid: res.headers.uid,
+          uid: res.headers.uid
         };
         const id = res.data.data.id;
         setHeaders(headersObj);

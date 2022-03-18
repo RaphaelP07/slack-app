@@ -31,6 +31,11 @@ export default (state, action) => {
         ...state,
         headers: action.payload,
       };
+    case "RETRIEVE_MESSAGES":
+      return {
+        ...state,
+        messages: action.payload,
+      };
     default:
       return state;
   }

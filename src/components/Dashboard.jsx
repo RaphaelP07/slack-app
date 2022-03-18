@@ -8,11 +8,11 @@ import axios from "axios";
 import { GlobalContext } from "../context/GlobalState";
 
 const Dashboard = ({ loggedUser, loggedID }) => {
-  const { headers, addAccount, addChannel } = useContext(GlobalContext);
+  const { headers, addAccount, addChannel, baseURL } = useContext(GlobalContext);
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://206.189.91.54/api/v1/users",
+      url: `${baseURL}/users`,
       headers: headers,
     })
       .then((res) => {
@@ -25,7 +25,7 @@ const Dashboard = ({ loggedUser, loggedID }) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://206.189.91.54/api/v1/channels",
+      url: `${baseURL}/channels`,
       headers: headers,
     }).then((res) => {
       // console.log(res.data.data);
