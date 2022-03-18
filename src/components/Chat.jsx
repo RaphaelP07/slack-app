@@ -2,25 +2,23 @@ import React, { useContext, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { GlobalContext } from '../context/GlobalState'
+import axios from 'axios'
 
 const Chat = () => {
-  const { users, channels } = useContext(GlobalContext)
+  const { users, channels, headers, retrieveMessages } = useContext(GlobalContext)
   const [ getCompleted,  setGetCompleted ] = useState(false)
   
   useEffect(() => {
     if (users.length === 1) {
       setGetCompleted(true)
-    }
+    } 
   }, [users.length])
 
   const receivers = getCompleted && users[0].concat(channels[0])
-
   
   const receiver = getCompleted && receivers.filter(receiver => {
     return receiver.selected === true
   })
-
-  console.log(receiver.length)
 
   return (
     <div className="chat-container">
@@ -38,6 +36,7 @@ const Chat = () => {
           </>}
       </div>}
       <div className="chat-history">
+
       </div>
       <div className="chat-input-container">
         <div className='chat-tools-container'>

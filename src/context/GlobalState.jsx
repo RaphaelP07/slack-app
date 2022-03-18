@@ -7,11 +7,11 @@ import axios from "axios";
 const initialState = {
   users: [],
   channels: [],
-  // headers: {}
   headers:
     localStorage.getItem("headers") === null
       ? {}
       : JSON.parse(localStorage.getItem("headers")),
+  messages: []
 };
 
 // create context
@@ -20,7 +20,7 @@ export const GlobalContext = createContext(initialState);
 // provider component
 export const GlobalProvider = ({ children, headers }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-  const baseURL = "http://206.189.91.54/api/v1/";
+  const baseURL = "http://206.189.91.54/api/v1";
 
   // useEffect(() => {
   //   axios({
@@ -77,6 +77,13 @@ export const GlobalProvider = ({ children, headers }) => {
     });
   }
 
+  function retrieveMessages (messages) {
+    dispatch({
+      type: "RETRIEVE_MESSAGES",
+      payload: messages,
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -88,6 +95,7 @@ export const GlobalProvider = ({ children, headers }) => {
         selectChat,
         setHeaders,
         addChannel,
+        retrieveMessages
       }}
     >
       {children}

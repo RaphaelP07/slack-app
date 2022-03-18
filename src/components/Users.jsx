@@ -5,7 +5,7 @@ import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 
 const Users = () => {
-  const { users, selectChat, baseURL } = useContext(GlobalContext);
+  const { users, selectChat, baseURL, headers } = useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
 
@@ -16,8 +16,24 @@ const Users = () => {
   const select = (user) => {
     user.selected = true;
     setRerender(!rerender);
+    selectedMessages(user.id)
     selectChat(user.id);
   };
+
+  const selectedMessages = (id) => {
+    console.log(id)
+    axios({
+      method: "get",
+      url: `${baseURL}messages/`,
+      headers: {...headers},
+      receiver_id : id,
+      receiver_class : "User"
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div className="side-bar-direct-messages">
