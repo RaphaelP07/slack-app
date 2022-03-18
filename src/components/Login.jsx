@@ -43,7 +43,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
           ["access-token"]: Object.values(res.headers)[0],
           client: res.headers.client,
           expiry: res.headers.expiry,
-          uid: res.headers.uid
+          uid: res.headers.uid,
         };
         const id = res.data.data.id;
         setHeaders(headersObj);
@@ -53,16 +53,16 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
         localStorage.setItem("loggedUser", email);
         localStorage.setItem("headers", JSON.stringify(headersObj));
         navigate("/slack-app/dashboard");
+      })
+      .catch((error) => {
+        if (error) {
+          setFormError(true);
+        }
+        // const { full_messages, ...errors } = error.response.data.errors;
+        // Object.keys(errors).forEach((name) => {
+        //   setFormError(error.response.data.errors.full_messages[0]);
+        // });
       });
-    // .catch((error) => {
-    //   const { full_messages, ...errors } = error.response.data.errors;
-    //   Object.keys(errors).forEach((name) => {
-    //     setError(name, {
-    //       type: "manual",
-    //       message: error.response.data.errors.full_messages[0],
-    //     });
-    //   });
-    // });
   };
 
   let currentUser = users.filter((user) => {
@@ -97,6 +97,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
           <form onSubmit={onSubmit} noValidate>
             <div>
               <input
+                autoComplete="off"
                 required
                 type="email"
                 id="email"
