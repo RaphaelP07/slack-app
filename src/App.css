@@ -277,6 +277,9 @@ body {
   margin-left: 90px;
   cursor: pointer;
 }
+.add-channel-member {
+  cursor: pointer;
+}
 
 .popup-wrapper {
   width: 100%;

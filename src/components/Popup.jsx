@@ -1,10 +1,16 @@
 import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Popup = ({ loggedUser, loggedID }) => {
   const { baseURL, headers } = useContext(GlobalContext);
   const [channelName, setChannelName] = useState("");
+  const [memberID, setMemberID] = useState("");
+  const [channelMembers, setChannelMembers] = useState([]);
+  const navigate = useNavigate();
   const ID = parseInt(loggedID);
   // const userHeaders = headers;
 
@@ -13,13 +19,19 @@ const Popup = ({ loggedUser, loggedID }) => {
       case "channelName":
         setChannelName(e.target.value);
         break;
+      case "memberID":
+        setMemberID(+e.target.value);
+        break;
     }
+  };
+
+  const addMember = () => {
+    setChannelMembers([...channelMembers, memberID]);
+    setMemberID("");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    console.log(channelName, ID);
 
     //   axios
     //     .post("http://206.189.91.54/api/v1/channels", {
@@ -41,11 +53,12 @@ const Popup = ({ loggedUser, loggedID }) => {
       headers: headers,
       data: {
         name: channelName,
-        user_ids: [ID, 1736],
+        user_ids: [channelMembers],
       },
     })
       .then((response) => {
         console.log(response);
+        navigate("/slack-app/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -68,7 +81,23 @@ const Popup = ({ loggedUser, loggedID }) => {
                 placeholder="channel-name"
                 onChange={handleChange}
               ></input>
+              <input
+                type="text"
+                id="memberID"
+                value={memberID}
+                placeholder="member-ID's"
+                onChange={handleChange}
+              ></input>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className={"add-channel-member"}
+                onClick={addMember}
+              />
             </div>
+            {channelMembers.length > 0 &&
+              channelMembers.map((member) => (
+                <span key={member}>{member}, </span>
+              ))}
             <button className="btn-login" type="submit">
               Create Channel
             </button>

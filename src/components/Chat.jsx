@@ -14,12 +14,14 @@ const Chat = () => {
       setGetCompleted(true)
     } 
   }, [users.length])
-
-  const receivers = getCompleted && users[0].concat(channels[0])
   
-  const receiver = getCompleted && receivers.filter(receiver => {
-    return receiver.selected === true
-  })
+  const receivers = getCompleted && users[0].concat(channels[0]);
+
+  const receiver =
+    getCompleted &&
+    receivers.filter((receiver) => {
+      return receiver.selected === true;
+    });
 
   const receiverClass = 
     receiver === false ||
@@ -121,7 +123,7 @@ const Chat = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
