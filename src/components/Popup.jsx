@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const Popup = ({ loggedUser, loggedID }) => {
@@ -65,43 +65,56 @@ const Popup = ({ loggedUser, loggedID }) => {
       });
   };
 
+  const handleXClick = () => {
+    navigate("/slack-app/dashboard");
+  };
+
   return (
     <div className="popup-wrapper">
-      <div className="popup">
-        <div className="sub-header">
-          <h1>Create a new channel!</h1>
+      <div className="popup-header">
+        <div className="popup-channel">
+          <FontAwesomeIcon
+            icon={faXmark}
+            className="return-dashboard"
+            onClick={handleXClick}
+          />
         </div>
-        <div className="form-container">
-          <form onSubmit={onSubmit} noValidate>
-            <div>
-              <input
-                type="text"
-                id="channelName"
-                value={channelName}
-                placeholder="channel-name"
-                onChange={handleChange}
-              ></input>
-              <input
-                type="text"
-                id="memberID"
-                value={memberID}
-                placeholder="member-ID's"
-                onChange={handleChange}
-              ></input>
-              <FontAwesomeIcon
-                icon={faPlus}
-                className={"add-channel-member"}
-                onClick={addMember}
-              />
-            </div>
-            {channelMembers.length > 0 &&
-              channelMembers.map((member) => (
-                <span key={member}>{member}, </span>
-              ))}
-            <button className="btn-login" type="submit">
-              Create Channel
-            </button>
-          </form>
+        <div className="popup">
+          <div className="sub-header-channel">
+            <h1>Create a new channel!</h1>
+          </div>
+          <div className="form-container">
+            <form onSubmit={onSubmit} noValidate>
+              <div>
+                <input
+                  type="text"
+                  id="channelName"
+                  value={channelName}
+                  placeholder="channel-name"
+                  onChange={handleChange}
+                ></input>
+                <input
+                  type="text"
+                  id="memberID"
+                  value={memberID}
+                  placeholder="member-ID's"
+                  onChange={handleChange}
+                ></input>
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className={"add-channel-member"}
+                  onClick={addMember}
+                />
+              </div>
+              {channelMembers.length > 0 &&
+                channelMembers.map((member) => (
+                  <span key={member}>{member}, </span>
+                ))}
+              <button className="btn-login" type="submit">
+                Create Channel
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

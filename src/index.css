@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;900&display=swap");
 
 *,
 *::before,
@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 1.3125rem;
   line-height: 1.46668;
   font-weight: 400;
@@ -81,6 +81,40 @@ main {
   justify-content: center;
   align-items: center;
   margin: 0 0 20px;
+}
+
+.sub-header-channel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 20px;
+  width: 100%;
+}
+
+.sub-header-channel h1 {
+  display: inline-block;
+  font-size: 3rem;
+}
+
+.popup-channel {
+  height: 60px;
+  font-size: 2rem;
+  margin-left: 900px;
+  cursor: pointer;
+}
+
+.return-dashboard {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.popup-header {
+  border: 1px solid black;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .sub-header-register {
@@ -235,4 +269,70 @@ form div span {
 
 .visibility-hidden {
   visibility: hidden;
+}
+
+.popup2-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup2-container {
+  border: 1px solid rgba(59, 59, 59, 0.2);
+  border-radius: 4px;
+  box-shadow: 2px 3px #cac6c6;
+  height: 400px;
+  display: grid;
+  grid-template-rows: 15% 85%;
+}
+
+.popup2-container header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.popup2-return {
+  padding-right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.popup2-form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup2-form {
+  padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup2-add {
+  padding-top: 20px;
+  cursor: pointer;
+}
+
+.popup2-submit {
+  color: #fff;
+  background-color: #4a154b;
+  border-radius: 4px;
+  font-size: 22px;
+  font-weight: 900;
+  height: 44px;
+  min-width: 96px;
+  padding: 0 16px 3px;
+  margin-top: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.popup2-form span {
+  color: red;
 }
