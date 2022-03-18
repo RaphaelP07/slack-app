@@ -1,11 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faXmark, faPlus,} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faXmark,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Channels = () => {
-  const { users, channels, selectChat } = useContext(GlobalContext);
+  const { channels, selectChat, baseURL, headers, retrieveMessages } =
+    useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
   const navigate = useNavigate();
@@ -17,11 +23,25 @@ const Channels = () => {
   const select = (channel) => {
     channel.selected = true;
     setRerender(!rerender);
+    selectedMessages(channel.id);
     selectChat(channel.id);
   };
 
   const showPopup = () => {
     navigate("/slack-app/popup");
+  };
+
+  const selectedMessages = (id) => {
+    axios({
+      method: "get",
+      url: `${baseURL}/messages?receiver_id=${id}&receiver_class=Channel`,
+      headers: headers,
+      receiver_id: id,
+      receiver_class: "Channel",
+    }).then((res) => {
+      retrieveMessages(res.data.data);
+    });
+    // .catch((err) => console.log(err));
   };
 
   return (
