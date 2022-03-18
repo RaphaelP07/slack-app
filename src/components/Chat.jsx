@@ -45,7 +45,6 @@ const Chat = () => {
         receiver_class: receiverClass,
         body: messageInput,
       },
-<<<<<<< HEAD
     }).then(() => {
       axios({
         method: "get",
@@ -69,25 +68,6 @@ const Chat = () => {
     navigate("/slack-app/popup2");
   };
 
-=======
-    })
-      .then(() => {
-        axios({
-          method: "get",
-          url: `${baseURL}/messages?receiver_id=${receiver[0].id}&receiver_class=${receiverClass}`,
-          headers: headers,
-          data: {
-            receiver_id: receiver[0].id,
-            receiver_class: receiverClass,
-            body: messageInput
-          },
-        }).then ((res) => retrieveMessages(res.data.data))
-      })      
-    
-    setMessageInput('')
-  }
-
->>>>>>> main
   return (
     <div className="chat-container">
       {receiver.length === undefined ? (

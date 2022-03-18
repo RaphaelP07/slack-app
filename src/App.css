@@ -280,10 +280,19 @@ body {
   cursor: pointer;
 }
 .add-channel-member {
+  color: rgb(100, 98, 98);
   cursor: pointer;
+  position: relative;
+  bottom: 33px;
+  left: 270px;
 }
 
 .popup-wrapper {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.424);
   width: 100%;
   height: 100vh;
   display: flex;
@@ -294,6 +303,7 @@ body {
 
 .popup {
   /* border: 1px solid black; */
+  background-color: white;
   height: 600px;
   display: flex;
   align-items: center;
@@ -311,6 +321,7 @@ body {
 }
 
 .message-date {
+  z-index: 0;
   color: grey;
   font-weight: 300;
   font-size: 13px;
@@ -340,11 +351,10 @@ body {
   border: 1px solid rgb(0, 0, 0);
   z-index: 1;
   color: white;
-  
 }
 
 .search-header::placeholder {
-  color: rgb(199, 199, 199)
+  color: rgb(199, 199, 199);
 }
 
 .search-icon {
@@ -355,7 +365,7 @@ body {
 .search-drop-down {
   background-color: white;
   width: 39vw;
-  height: 40vw;
+  max-height: 400px;
   top: 31px;
   left: 550px;
   z-index: 0;
@@ -364,9 +374,27 @@ body {
   overflow: scroll;
 }
 
+.search-drop-down-add {
+  background-color: white;
+  width: 600px;
+  max-height: 180px;
+  z-index: 0;
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.459);
+  overflow: scroll;
+  border-radius: 4px;
+}
+
 .search-users {
   color: black;
   padding-left: 10px;
+}
+
+.search-users-channel {
+  color: black;
+  padding-left: 10px;
+  display: flex;
+  text-align: left;
 }
 
 .search-users:hover {

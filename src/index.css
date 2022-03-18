@@ -93,6 +93,7 @@ main {
 
 .sub-header-channel h1 {
   display: inline-block;
+  color: black;
   font-size: 3rem;
 }
 
@@ -109,6 +110,7 @@ main {
 }
 
 .popup-header {
+  background-color: white;
   border: 1px solid black;
   height: 600px;
   display: flex;
@@ -335,4 +337,8 @@ form div span {
 
 .popup2-form span {
   color: red;
+}
+
+.channelMembers {
+  color: black;
 }
