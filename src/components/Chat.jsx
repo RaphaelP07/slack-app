@@ -52,16 +52,10 @@ const Chat = () => {
             body: messageInput
           },
         }).then ((res) => retrieveMessages(res.data.data))
-      })
-      // .catch((error) => {
-        //   console.log(error);
-        // });
-        
+      })      
     
     setMessageInput('')
   }
-
-  console.log(receiverClass)
 
   return (
     <div className="chat-container">

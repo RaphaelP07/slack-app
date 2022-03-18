@@ -16,10 +16,8 @@ const Dashboard = ({ loggedUser, loggedID }) => {
       headers: headers,
     })
       .then((res) => {
-        // console.log(res.data.data);
         addAccount(res.data.data);
       })
-      .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
@@ -28,12 +26,8 @@ const Dashboard = ({ loggedUser, loggedID }) => {
       url: `${baseURL}/channels`,
       headers: headers,
     }).then((res) => {
-      // console.log(res.data.data);
       addChannel(res.data.data);
     });
-    // .catch((err) =>
-    // console.log(err)
-    // );
   }, []);
 
   return loggedUser === "" ? (
