@@ -23,7 +23,7 @@ const Channels = () => {
   const select = (channel) => {
     channel.selected = true;
     setRerender(!rerender);
-    selectedMessages(channel.id);
+    selectedMessages(channel.id)
     selectChat(channel.id);
   };
 
