@@ -24,7 +24,7 @@ const Users = () => {
     console.log(id)
     axios({
       method: "get",
-      url: `${baseURL}messages/`,
+      url: `${baseURL}messages`,
       headers: {...headers},
       receiver_id : id,
       receiver_class : "User"

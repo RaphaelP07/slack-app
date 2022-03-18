@@ -8,7 +8,7 @@ import axios from "axios";
 import { GlobalContext } from "../context/GlobalState";
 
 const Dashboard = ({ loggedUser, loggedID }) => {
-  const { headers, addAccount, addChannel } = useContext(GlobalContext);
+  const { headers, addAccount, addChannel, baseURL } = useContext(GlobalContext);
   useEffect(() => {
     axios({
       method: "get",
