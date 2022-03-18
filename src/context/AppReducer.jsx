@@ -36,6 +36,13 @@ export default (state, action) => {
         ...state,
         messages: action.payload,
       };
+    case "CLEAR_STATES":
+      return {
+        users: [],
+        channels: [],
+        messages: [],
+        headers: {}
+      }
     default:
       return state;
   }

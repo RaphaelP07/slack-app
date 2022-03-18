@@ -7,11 +7,11 @@ import axios from "axios";
 const initialState = {
   users: [],
   channels: [],
+  messages: [],
   headers:
     localStorage.getItem("headers") === null
       ? {}
       : JSON.parse(localStorage.getItem("headers")),
-  messages: []
 };
 
 // create context
@@ -84,6 +84,12 @@ export const GlobalProvider = ({ children, headers }) => {
     });
   }
 
+  function clearStates () {
+    dispatch({
+      type: "CLEAR_STATES",
+    });
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -96,7 +102,8 @@ export const GlobalProvider = ({ children, headers }) => {
         selectChat,
         setHeaders,
         addChannel,
-        retrieveMessages
+        retrieveMessages,
+        clearStates
       }}
     >
       {children}
