@@ -91,6 +91,7 @@ export const GlobalProvider = ({ children, headers }) => {
         channels: state.channels,
         headers: state.headers,
         baseURL: baseURL,
+        messages: state.messages,
         addAccount,
         selectChat,
         setHeaders,
