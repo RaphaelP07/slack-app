@@ -49,8 +49,8 @@ const Users = () => {
           Direct Messages
         </p>
       </div>
-      {!showUsers &&
-        users.length > 0 &&
+      {showUsers === false &&
+        users.length > 0 ?
         users[0].map((user) => (
           <div
             key={user.id}
@@ -65,7 +65,11 @@ const Users = () => {
             <p className="disable-highlight user">{user.email}</p>
             <FontAwesomeIcon icon={faXmark} className="x-icon" />
           </div>
-        ))}
+        )) : !showUsers &&
+        <p className="loading">
+          loading users...
+        </p>
+      }
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Popup2 = () => {
+const Popup2 = ({ setIsAddingMember }) => {
   const { headers, channels } = useContext(GlobalContext);
   const [memberID, setMemberID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,7 +26,7 @@ const Popup2 = () => {
   };
 
   const handleClick = () => {
-    navigate("/slack-app/dashboard");
+    setIsAddingMember(false)
   };
 
   const selectedChannel =

@@ -57,14 +57,15 @@ const Channels = () => {
         >
           Channels
         </p>
+        {!showChannels && 
         <FontAwesomeIcon
           icon={faPlus}
           className={"add-channel-button"}
           onClick={showPopup}
-        />
+        />}
       </div>
       {!showChannels &&
-        channels.length > 0 &&
+        channels.length > 0 ?
         channels[0].map((channel) => (
           <div
             key={channel.id}
@@ -79,7 +80,11 @@ const Channels = () => {
             <p className="disable-highlight user">{channel.name}</p>
             <FontAwesomeIcon icon={faXmark} className="x-icon" />
           </div>
-        ))}
+        )) : !showChannels &&
+        <p className="loading">
+          loading channels...
+        </p>
+      }
       {isCreatingChannel && (
         <Popup setIsCreatingChannel={setIsCreatingChannel} />
       )}

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
+import Popup2 from './Popup2'
 import axios from "axios";
 
 const Chat = () => {
@@ -10,6 +11,7 @@ const Chat = () => {
     useContext(GlobalContext);
   const [getCompleted, setGetCompleted] = useState(false);
   const [messageInput, setMessageInput] = useState("");
+  const [isAddingMember, setIsAddingMember] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,10 +63,6 @@ const Chat = () => {
     setMessageInput("");
   };
 
-  const handleSecondPopup = () => {
-    navigate("/slack-app/popup2");
-  };
-
   return (
     <div className="chat-container">
       {receiver.length === undefined ? (
@@ -86,12 +84,15 @@ const Chat = () => {
                   : receiver[0].name}
               </strong>
               {receiverClass === "Channel" ? (
-                <button className="add-member" onClick={handleSecondPopup}>
+                <button className="add-member" onClick={() => setIsAddingMember(true)}>
                   <FontAwesomeIcon icon={faPlus} />
                   MEMBER
                 </button>
               ) : (
                 ""
+              )}
+              {isAddingMember && (
+                <Popup2 setIsAddingMember={setIsAddingMember}/>
               )}
             </>
           )}
