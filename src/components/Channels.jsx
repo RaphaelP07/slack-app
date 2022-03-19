@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
+import Popup from "./Popup";
 import axios from "axios";
 
 const Channels = () => {
@@ -14,6 +15,7 @@ const Channels = () => {
     useContext(GlobalContext);
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
+  const [isCreatingChannel, setIsCreatingChannel] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,12 +25,12 @@ const Channels = () => {
   const select = (channel) => {
     channel.selected = true;
     setRerender(!rerender);
-    selectedMessages(channel.id)
+    selectedMessages(channel.id);
     selectChat(channel.id);
   };
 
   const showPopup = () => {
-    navigate("/slack-app/popup");
+    setIsCreatingChannel(true);
   };
 
   const selectedMessages = (id) => {
@@ -81,6 +83,9 @@ const Channels = () => {
             <FontAwesomeIcon icon={faXmark} className="x-icon" />
           </div>
         ))}
+      {isCreatingChannel && (
+        <Popup setIsCreatingChannel={setIsCreatingChannel} />
+      )}
     </div>
   );
 };

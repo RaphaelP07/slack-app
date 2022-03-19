@@ -1,51 +1,80 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
-const Popup = ({ loggedUser, loggedID }) => {
-  const { baseURL, headers } = useContext(GlobalContext);
+const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
+  const { baseURL, headers, users, addChannel } = useContext(GlobalContext);
   const [channelName, setChannelName] = useState("");
-  const [memberID, setMemberID] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [channelMembers, setChannelMembers] = useState([]);
-  const navigate = useNavigate();
+  const [isSearching, setIsSearching] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const memberAccounts = [];
   const ID = parseInt(loggedID);
-  // const userHeaders = headers;
 
   const handleChange = (e) => {
     switch (e.target.id) {
       case "channelName":
         setChannelName(e.target.value);
         break;
-      case "memberID":
-        setMemberID(+e.target.value);
+      case "searchInput":
+        setSearchInput(e.target.value);
+        setIsSearching(true);
+        updateSuggestions(e);
         break;
     }
   };
 
-  const addMember = () => {
-    setChannelMembers([...channelMembers, memberID]);
-    setMemberID("");
+  const updateSuggestions = (e) => {
+    let emails = [];
+    let suggestions = [];
+
+    emails =
+      users.length > 0
+        ? users[0].map((user) => {
+            return user.email;
+          })
+        : [];
+
+    suggestions = emails.filter((email) => {
+      return email.includes(searchInput.toString());
+    });
+
+    setSuggestions(suggestions);
   };
+
+  const passEmail = (user) => {
+    const selectedEmail = users[0].filter((account) => {
+      return account.email === user;
+    });
+    setSearchInput(selectedEmail[0].email);
+    setIsSearching(false);
+    setSuggestions([])
+  };
+
+  const addMember = () => {
+    setChannelMembers([...channelMembers, searchInput]);
+    setSearchInput("");
+  };
+
+  const addUser = channelMembers.forEach((member) => {
+    memberAccounts.push(
+      users[0].filter((user) => {
+        return user.email === member;
+      })
+    );
+  });
+
+  const memberIDs = memberAccounts.map((member) => {
+    return member[0].id;
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    //   axios
-    //     .post("http://206.189.91.54/api/v1/channels", {
-    //       name: channelName,
-    //       user_ids: [ID, 1736],
-    //       headers: headers,
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
 
     axios({
       method: "post",
@@ -53,12 +82,21 @@ const Popup = ({ loggedUser, loggedID }) => {
       headers: headers,
       data: {
         name: channelName,
-        user_ids: [channelMembers],
+        user_ids: [memberIDs],
       },
     })
       .then((response) => {
         console.log(response);
-        navigate("/slack-app/dashboard");
+        setIsCreatingChannel(false);
+
+        axios({
+          method: "get",
+          url: `${baseURL}/channels`,
+          headers: headers,
+        }).then((res) => {
+          addChannel(res.data.data);
+        });
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -66,13 +104,18 @@ const Popup = ({ loggedUser, loggedID }) => {
   };
 
   const handleXClick = () => {
-    navigate("/slack-app/dashboard");
+    setIsCreatingChannel(false);
   };
 
+  const cancelSearch = () => {
+    setIsSearching(false)
+    setSuggestions([])
+  }
+
   return (
-    <div className="popup-wrapper">
-      <div className="popup-header">
-        <div className="popup-channel">
+    <div className="popup-wrapper" onClick={cancelSearch}>
+      <div className="popup-header" onClick={cancelSearch}>
+        <div className="popup-channel" onClick={cancelSearch}>
           <FontAwesomeIcon
             icon={faXmark}
             className="return-dashboard"
@@ -87,6 +130,7 @@ const Popup = ({ loggedUser, loggedID }) => {
             <form onSubmit={onSubmit} noValidate>
               <div>
                 <input
+                  autoComplete="off"
                   type="text"
                   id="channelName"
                   value={channelName}
@@ -94,22 +138,41 @@ const Popup = ({ loggedUser, loggedID }) => {
                   onChange={handleChange}
                 ></input>
                 <input
+                  autoComplete="off"
                   type="text"
-                  id="memberID"
-                  value={memberID}
+                  id="searchInput"
+                  value={searchInput}
                   placeholder="member-ID's"
                   onChange={handleChange}
                 ></input>
+                {isSearching && (
+                  <div className="search-drop-down-add">
+                    {suggestions.map((user) => (
+                      <p
+                        className="search-users-channel"
+                        key={uuidv4()}
+                        onClick={() => passEmail(user)}
+                      >
+                        {user}
+                      </p>
+                    ))}
+                  </div>
+                )}
                 <FontAwesomeIcon
                   icon={faPlus}
                   className={"add-channel-member"}
                   onClick={addMember}
                 />
               </div>
-              {channelMembers.length > 0 &&
-                channelMembers.map((member) => (
-                  <span key={member}>{member}, </span>
-                ))}
+              <div className="channel-members-container">
+                {channelMembers.length > 0 &&
+                  channelMembers.map((member) => (
+                    <span className="channel-members" key={member}>
+                      {member},{" "}
+                    </span>
+                  ))
+                }
+              </div>
               <button className="btn-login" type="submit">
                 Create Channel
               </button>
