@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import slack from "../slack-logo.png";
+import slack from "../images/slack-logo.png";
 import { GlobalContext } from "../context/GlobalState";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useNavigate } from "react-router-dom";

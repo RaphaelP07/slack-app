@@ -1,10 +1,10 @@
-import slack from "../slack-logo.png";
+import slack from "../images/slack-logo.png";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 
-const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
+const Login = ({ setLoggedUser, setLoggedID }) => {
   const navigate = useNavigate();
   const { users, baseURL, setHeaders } = useContext(GlobalContext);
   const [email, setEmail] = useState("");
@@ -38,7 +38,6 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
         mode: "no-cors",
       })
       .then((res) => {
-        // console.log(res);
         const headersObj = {
           ["access-token"]: Object.values(res.headers)[0],
           client: res.headers.client,
@@ -76,7 +75,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
         <div className="center-column">
           <img
             src={slack}
-            alt="slack logo"
+            alt="lacks logo"
             onClick={() => window.location.reload()}
           />
         </div>
@@ -84,7 +83,7 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
       </header>
       <main>
         <div className="sub-header">
-          <h1>Sign in to Slack</h1>
+          <h1>Sign in to Lacks</h1>
           <div>
             <p>
               We suggest using the{" "}
@@ -126,13 +125,11 @@ const Login = ({ loggedUser, setLoggedUser, setLoggedID }) => {
         </div>
       </main>
       <div className="registered">
-        <p> New to Slack?</p>
+        <p> New to Lacks?</p>
         <Link to="/slack-app/register"> Create an account </Link>
       </div>
       <footer>
-        <div>Privacy & Terms</div>
-        <div>Contact Us</div>
-        <div>🌐 Change Region</div>
+        <div>© 2022 Raphael Padua and Ronny Pinoon</div>
       </footer>
     </div>
   );

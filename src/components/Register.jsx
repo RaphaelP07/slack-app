@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GlobalContext } from "../context/GlobalState";
-import slack from "../slack-logo.png";
+import slack from "../images/slack-logo.png";
 import * as yup from "yup";
 import axios from "axios";
 
@@ -118,22 +118,14 @@ const Register = () => {
               Sign Up
             </button>
           </form>
-          <div className="terms-register">
-            <p>
-              By continuing, you're agreeing to our Customer Terms of Service,
-              User Terms of Service, Privacy Policy, and Cookie Policy.
-            </p>
-          </div>
         </div>
       </div>
       <div className="registered">
-        <p>Already got a Slack account?</p>
+        <p>Already got a Lacks account?</p>
         <Link to="/slack-app">Sign in to an existing account</Link>
       </div>
       <footer>
-        <div>Privacy & Terms</div>
-        <div>Contact Us</div>
-        <div>🌐 Change Region</div>
+        <div>© 2022 Raphael Padua and Ronny Pinoon</div>
       </footer>
     </div>
   );

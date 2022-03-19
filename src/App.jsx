@@ -14,7 +14,6 @@ import { GlobalProvider } from "./context/GlobalState";
 function App() {
   const [loggedUser, setLoggedUser] = useState("");
   const [loggedID, setLoggedID] = useState("");
-  // const [headers, setHeaders] = useState({})
 
   useEffect(() => {
     localStorage.getItem("loggedUser") !== null &&
@@ -44,10 +43,6 @@ function App() {
           <Route
             path="/slack-app/setup"
             element={<Setup loggedUser={loggedUser} />}
-          />
-          <Route
-            path="slack-app/popup"
-            element={<Popup loggedUser={loggedUser} loggedID={loggedID} />}
           />
           <Route
             path="slack-app/dashboard"

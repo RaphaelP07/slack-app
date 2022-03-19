@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import logo from '../images/slack-logo.png'
+import logo from '../images/slack-logo-white.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -7,10 +7,10 @@ import { GlobalContext } from '../context/GlobalState';
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-const Header = () => {
+const Header = ({ isSearching, setIsSearching }) => {
   const { clearStates, users, selectChat, headers, baseURL, retrieveMessages } = useContext(GlobalContext)
   const [searchInput, setSearchInput] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
+  // const [isSearching, setIsSearching] = useState(false)
   const [suggestions, setSuggestions] = useState([])
 
   const signOutClear = () => {
@@ -33,6 +33,10 @@ const Header = () => {
     suggestions = emails.filter((email) => {
       return email.includes(searchInput.toString())
     })
+
+    if (searchInput === '') {
+      suggestions = []
+    }
     
     setSuggestions(suggestions)
   }
@@ -44,7 +48,9 @@ const Header = () => {
     
     selectedEmail.selected = true;
     selectedMessages(selectedEmail[0].id)
-    selectChat(selectedEmail[0].id);
+    setIsSearching(false)
+    setSearchInput('')
+    setSuggestions([])
   }
 
   const selectedMessages = (id) => {
@@ -57,8 +63,7 @@ const Header = () => {
     })
       .then((res) => {
         retrieveMessages(res.data.data);
-        setIsSearching(false)
-        setSearchInput('')
+        selectChat(id);
       })
   }
 
@@ -69,7 +74,7 @@ const Header = () => {
       </div>
       <div className="search-header-container">
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
-        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' onClick={() => setIsSearching(true)} onChange={(e) => updateSuggestions(e) }/>
+        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' value={searchInput} onClick={() => setIsSearching(true)} onChange={(e) => updateSuggestions(e) }/>
         {isSearching && 
           <div className="search-drop-down">
             {suggestions.map((user) => (

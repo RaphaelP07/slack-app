@@ -11,7 +11,6 @@ const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
   const [channelName, setChannelName] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [channelMembers, setChannelMembers] = useState([]);
-  const navigate = useNavigate();
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const memberAccounts = [];
@@ -54,16 +53,13 @@ const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
     });
     setSearchInput(selectedEmail[0].email);
     setIsSearching(false);
+    setSuggestions([])
   };
 
   const addMember = () => {
     setChannelMembers([...channelMembers, searchInput]);
     setSearchInput("");
   };
-
-  // const addUser = users[0].filter((user) => {
-  //   return user.email === channelMembers[0];
-  // });
 
   const addUser = channelMembers.forEach((member) => {
     memberAccounts.push(
@@ -111,10 +107,15 @@ const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
     setIsCreatingChannel(false);
   };
 
+  const cancelSearch = () => {
+    setIsSearching(false)
+    setSuggestions([])
+  }
+
   return (
-    <div className="popup-wrapper">
-      <div className="popup-header">
-        <div className="popup-channel">
+    <div className="popup-wrapper" onClick={cancelSearch}>
+      <div className="popup-header" onClick={cancelSearch}>
+        <div className="popup-channel" onClick={cancelSearch}>
           <FontAwesomeIcon
             icon={faXmark}
             className="return-dashboard"
@@ -163,12 +164,15 @@ const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
                   onClick={addMember}
                 />
               </div>
-              {channelMembers.length > 0 &&
-                channelMembers.map((member) => (
-                  <span className="channelMembers" key={member}>
-                    {member},{" "}
-                  </span>
-                ))}
+              <div className="channel-members-container">
+                {channelMembers.length > 0 &&
+                  channelMembers.map((member) => (
+                    <span className="channel-members" key={member}>
+                      {member},{" "}
+                    </span>
+                  ))
+                }
+              </div>
               <button className="btn-login" type="submit">
                 Create Channel
               </button>
