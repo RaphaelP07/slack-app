@@ -57,9 +57,6 @@ const Chat = () => {
         },
       }).then((res) => retrieveMessages(res.data.data));
     });
-    // .catch((error) => {
-    //   console.log(error);
-    // });
 
     setMessageInput("");
   };
