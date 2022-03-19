@@ -74,6 +74,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // console.log(memberIDs)
 
     axios({
       method: "post",
@@ -81,7 +82,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
       headers: headers,
       data: {
         name: channelName,
-        user_ids: [memberIDs],
+        user_ids: memberIDs,
       },
     })
       .then((response) => {
