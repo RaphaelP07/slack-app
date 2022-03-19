@@ -1,16 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Popup2 = () => {
-  const navigate = useNavigate();
-  const { baseURL, headers, channels } = useContext(GlobalContext);
+  const { headers, channels } = useContext(GlobalContext);
   const [memberID, setMemberID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     switch (e.target.id) {

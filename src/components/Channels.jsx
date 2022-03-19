@@ -6,7 +6,6 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
-import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
 import axios from "axios";
 
@@ -16,7 +15,6 @@ const Channels = () => {
   const [rerender, setRerender] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
   const [isCreatingChannel, setIsCreatingChannel] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     return;
@@ -43,7 +41,6 @@ const Channels = () => {
     }).then((res) => {
       retrieveMessages(res.data.data);
     });
-    // .catch((err) => console.log(err));
   };
 
   return (

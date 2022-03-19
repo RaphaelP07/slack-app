@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../images/slack-logo-white.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -7,10 +7,10 @@ import { GlobalContext } from '../context/GlobalState';
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-const Header = ({ isSearching, setIsSearching }) => {
+const Header = () => {
   const { clearStates, users, selectChat, headers, baseURL, retrieveMessages } = useContext(GlobalContext)
   const [searchInput, setSearchInput] = useState('')
-  // const [isSearching, setIsSearching] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
   const [suggestions, setSuggestions] = useState([])
 
   const signOutClear = () => {

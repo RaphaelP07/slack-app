@@ -34,10 +34,6 @@ const Users = () => {
       // .catch((err) => console.log(err));
   }
 
-  const userConvos = users.filter((user) => {
-    return user.id
-  })
-
   return (
     <div className="side-bar-direct-messages">
       <div className="section-title">

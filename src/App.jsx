@@ -6,7 +6,6 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Setup from "./components/Setup";
 import ErrorPage from "./components/ErrorPage";
-import Popup from "./components/Popup";
 import Popup2 from "./components/Popup2";
 
 import { GlobalProvider } from "./context/GlobalState";

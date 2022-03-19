@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
-  const { users, addAccount, baseURL } = useContext(GlobalContext);
+  const { baseURL } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const {

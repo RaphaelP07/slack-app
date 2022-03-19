@@ -1,12 +1,11 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const Popup = ({ loggedUser, loggedID, setIsCreatingChannel }) => {
+const Popup = ({ loggedID, setIsCreatingChannel }) => {
   const { baseURL, headers, users, addChannel } = useContext(GlobalContext);
   const [channelName, setChannelName] = useState("");
   const [searchInput, setSearchInput] = useState("");

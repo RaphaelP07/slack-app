@@ -39,7 +39,7 @@ const Login = ({ setLoggedUser, setLoggedID }) => {
       })
       .then((res) => {
         const headersObj = {
-          ["access-token"]: Object.values(res.headers)[0],
+          "access-token": res.headers['access-token'],
           client: res.headers.client,
           expiry: res.headers.expiry,
           uid: res.headers.uid,
@@ -63,10 +63,6 @@ const Login = ({ setLoggedUser, setLoggedID }) => {
         // });
       });
   };
-
-  let currentUser = users.filter((user) => {
-    return user.email === email;
-  });
 
   return (
     <div className="wrapper">
