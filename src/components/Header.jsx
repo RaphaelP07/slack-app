@@ -46,7 +46,7 @@ const Header = () => {
       return account.email === user
     })
     
-    selectedEmail.selected = true;
+    selectedEmail[0].selected = true;
     selectedMessages(selectedEmail[0].id)
     setIsSearching(false)
     setSearchInput('')
