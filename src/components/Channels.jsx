@@ -73,6 +73,7 @@ const Channels = () => {
               channel.selected === true ? "selected" : ""
             }`}
             onClick={() => select(channel)}
+            title={channel.name}
           >
             <div className="disable-highlight profile-icon">
               {channel.name.split("")[0]}
