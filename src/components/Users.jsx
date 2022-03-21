@@ -58,11 +58,12 @@ const Users = () => {
               user.selected === true ? "selected" : ""
             }`}
             onClick={() => select(user)}
+            title={user.email}
           >
             <div className="disable-highlight profile-icon">
               {user.email.split("")[0]}
             </div>
-            <p className="disable-highlight user">{user.email}</p>
+            <p className="disable-highlight user cut-text">{user.email}</p>
             <FontAwesomeIcon icon={faXmark} className="x-icon" />
           </div>
         )) : !showUsers &&
