@@ -13,6 +13,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [currentMembers, setCurrentMembers] = useState([]);
   const [memberID, setMemberID] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const memberAccount = [];
   const currentUsers = [];
   const currentUserAccounts = [];
@@ -67,6 +68,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
         setSearchInput(e.target.value);
         setIsSearching(true);
         updateSuggestions(e);
+        setErrorMessage("");
         break;
     }
   };
@@ -133,10 +135,11 @@ const SecondPopup = ({ setIsAddingMember }) => {
       },
     })
       .then((response) => {
-        console.log(response);
+        console.log(response.data.errors[0]);
         console.log(selectedChannelID);
         console.log(memberID);
         setSearchInput("");
+        setErrorMessage(response.data.errors[0]);
         // setIsAddingMember(false);
 
         axios({
@@ -189,6 +192,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
               </div>
             )}
             <button className="secondary-popup-button">ADD MEMBER</button>
+            {errorMessage && <span>{errorMessage}</span>}
           </form>
         </div>
         <div className="secondary-popup-lower">

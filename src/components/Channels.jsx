@@ -57,36 +57,33 @@ const Channels = () => {
         >
           Channels
         </p>
-        {!showChannels && 
-        <FontAwesomeIcon
-          icon={faPlus}
-          className={"add-channel-button"}
-          onClick={showPopup}
-        />}
+        {!showChannels && (
+          <FontAwesomeIcon
+            icon={faPlus}
+            className={"add-channel-button"}
+            onClick={showPopup}
+          />
+        )}
       </div>
       <div className="side-bar-channels">
-        {!showChannels &&
-          channels.length > 0 ?
-          channels[0].map((channel) => (
-            <div
-              key={channel.id}
-              className={`channel-container ${
-                channel.selected === true ? "selected" : ""
-              }`}
-              onClick={() => select(channel)}
-              title={channel.name}
-            >
-              <div className="disable-highlight profile-icon">
-                {channel.name.split("")[0]}
+        {!showChannels && channels.length > 0
+          ? channels[0].map((channel) => (
+              <div
+                key={channel.id}
+                className={`channel-container ${
+                  channel.selected === true ? "selected" : ""
+                }`}
+                onClick={() => select(channel)}
+                title={channel.name}
+              >
+                <div className="disable-highlight profile-icon">
+                  {channel.name.split("")[0]}
+                </div>
+                <p className="disable-highlight user">{channel.name}</p>
+                <FontAwesomeIcon icon={faXmark} className="x-icon" />
               </div>
-              <p className="disable-highlight user">{channel.name}</p>
-              <FontAwesomeIcon icon={faXmark} className="x-icon" />
-            </div>
-          )) : !showChannels &&
-          <p className="loading">
-            loading channels...
-          </p>
-        }
+            ))
+          : !showChannels && <p className="loading">loading channels...</p>}
         {isCreatingChannel && (
           <Popup setIsCreatingChannel={setIsCreatingChannel} />
         )}

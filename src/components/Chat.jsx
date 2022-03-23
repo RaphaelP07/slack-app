@@ -115,23 +115,30 @@ const Chat = () => {
                 key={messages.indexOf(message)}
                 className="message-container"
               >
-                {message.sender.email === 
-                (messages[messages.indexOf(message)-1] === undefined ? 
-                messages[messages.indexOf(message)].receiver.email : 
-                messages[messages.indexOf(message)-1].sender.email) ?
-                '' : 
-                <div className="message-sender">
-                  <div className="disable-highlight sender-icon">
-                    {message.sender.email.split("")[0]}
+                {message.sender.email ===
+                (messages[messages.indexOf(message) - 1] === undefined
+                  ? messages[messages.indexOf(message)].receiver.email
+                  : messages[messages.indexOf(message) - 1].sender.email) ? (
+                  ""
+                ) : (
+                  <div className="message-sender">
+                    <div className="disable-highlight sender-icon">
+                      {message.sender.email.split("")[0]}
+                    </div>
+                    <h4 className="sender-name">{message.sender.email}</h4>
                   </div>
-                  <h4 className="sender-name">{message.sender.email}</h4>
-                </div>}
-                <div className={`message-body-container 
-                ${message.sender.email === 
-                (messages[messages.indexOf(message)+1] === undefined ? 
-                messages[messages.indexOf(message)].receiver.email : 
-                messages[messages.indexOf(message)+1].sender.email) ?
-                '' : 'border-bottom'}`}>
+                )}
+                <div
+                  className={`message-body-container 
+                ${
+                  message.sender.email ===
+                  (messages[messages.indexOf(message) + 1] === undefined
+                    ? messages[messages.indexOf(message)].receiver.email
+                    : messages[messages.indexOf(message) + 1].sender.email)
+                    ? ""
+                    : "border-bottom"
+                }`}
+                >
                   <p className="message-body">{message.body}</p>
                   <p className="message-date">
                     {message.created_at.slice(11, 16)},{" "}
