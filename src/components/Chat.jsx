@@ -115,27 +115,29 @@ const Chat = () => {
                 key={messages.indexOf(message)}
                 className="message-container"
               >
-                <div className="message-header">
-                  <h4 className="message-sender">{message.sender.email}</h4>
+                {message.sender.email === 
+                (messages[messages.indexOf(message)-1] === undefined ? 
+                messages[messages.indexOf(message)].receiver.email : 
+                messages[messages.indexOf(message)-1].sender.email) ?
+                '' : 
+                <div className="message-sender">
+                  <div className="disable-highlight sender-icon">
+                    {message.sender.email.split("")[0]}
+                  </div>
+                  <h4 className="sender-name">{message.sender.email}</h4>
+                </div>}
+                <div className={`message-body-container 
+                ${message.sender.email === 
+                (messages[messages.indexOf(message)+1] === undefined ? 
+                messages[messages.indexOf(message)].receiver.email : 
+                messages[messages.indexOf(message)+1].sender.email) ?
+                '' : 'border-bottom'}`}>
+                  <p className="message-body">{message.body}</p>
                   <p className="message-date">
-                    {message.created_at.split("")[11]}
-                    {message.created_at.split("")[12]}
-                    {message.created_at.split("")[13]}
-                    {message.created_at.split("")[14]}
-                    {message.created_at.split("")[15]},{" "}
-                    {message.created_at.split("")[0]}
-                    {message.created_at.split("")[1]}
-                    {message.created_at.split("")[2]}
-                    {message.created_at.split("")[3]}
-                    {message.created_at.split("")[4]}
-                    {message.created_at.split("")[5]}
-                    {message.created_at.split("")[6]}
-                    {message.created_at.split("")[7]}
-                    {message.created_at.split("")[8]}
-                    {message.created_at.split("")[9]}
+                    {message.created_at.slice(11, 16)},{" "}
+                    {message.created_at.slice(0, 10)}
                   </p>
                 </div>
-                <p className="message-body">{message.body}</p>
               </div>
             ))}
           </>

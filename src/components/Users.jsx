@@ -35,7 +35,7 @@ const Users = () => {
   }
 
   return (
-    <div className="side-bar-direct-messages">
+    <>
       <div className="section-title">
         <FontAwesomeIcon
           icon={faCaretDown}
@@ -49,29 +49,31 @@ const Users = () => {
           Direct Messages
         </p>
       </div>
-      {showUsers === false &&
-        users.length > 0 ?
-        users[0].map((user) => (
-          <div
-            key={user.id}
-            className={`user-container ${
-              user.selected === true ? "selected" : ""
-            }`}
-            onClick={() => select(user)}
-            title={user.email}
-          >
-            <div className="disable-highlight profile-icon">
-              {user.email.split("")[0]}
+      <div className="side-bar-direct-messages">
+        {showUsers === false &&
+          users.length > 0 ?
+          users[0].map((user) => (
+            <div
+              key={user.id}
+              className={`user-container ${
+                user.selected === true ? "selected" : ""
+              }`}
+              onClick={() => select(user)}
+              title={user.email}
+            >
+              <div className="disable-highlight profile-icon">
+                {user.email.split("")[0]}
+              </div>
+              <p className="disable-highlight user cut-text">{user.email}</p>
+              <FontAwesomeIcon icon={faXmark} className="x-icon" />
             </div>
-            <p className="disable-highlight user cut-text">{user.email}</p>
-            <FontAwesomeIcon icon={faXmark} className="x-icon" />
-          </div>
-        )) : !showUsers &&
-        <p className="loading">
-          loading users...
-        </p>
-      }
-    </div>
+          )) : !showUsers &&
+          <p className="loading">
+            loading users...
+          </p>
+        }
+      </div>
+    </>
   );
 };
 
