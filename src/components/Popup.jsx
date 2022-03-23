@@ -1,4 +1,4 @@
-import { useState, useContext} from "react";
+import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -52,7 +52,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
     });
     setSearchInput(selectedEmail[0].email);
     setIsSearching(false);
-    setSuggestions([])
+    setSuggestions([]);
   };
 
   const addMember = () => {
@@ -96,7 +96,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
         }).then((res) => {
           addChannel(res.data.data);
         });
-        window.location.reload();
+        window.location.reload(); //temporary solution
       })
       .catch((error) => {
         console.log(error);
@@ -108,9 +108,9 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
   };
 
   const cancelSearch = () => {
-    setIsSearching(false)
-    setSuggestions([])
-  }
+    setIsSearching(false);
+    setSuggestions([]);
+  };
 
   return (
     <div className="popup-wrapper" onClick={cancelSearch}>
@@ -142,7 +142,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
                   type="text"
                   id="searchInput"
                   value={searchInput}
-                  placeholder="member-ID's"
+                  placeholder="member-email"
                   onChange={handleChange}
                 ></input>
                 {isSearching && (
@@ -170,8 +170,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
                     <span className="channel-members" key={member}>
                       {member},{" "}
                     </span>
-                  ))
-                }
+                  ))}
               </div>
               <button className="btn-login" type="submit">
                 Create Channel
