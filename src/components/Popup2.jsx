@@ -4,29 +4,30 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
 const Popup2 = ({ setIsAddingMember }) => {
-  const { headers, channels } = useContext(GlobalContext);
+  const { headers, channels, users } = useContext(GlobalContext);
+  const [suggestions, setSuggestions] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
   const [memberID, setMemberID] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     switch (e.target.id) {
-      case "memberID":
-        if (typeof e.target.value === "number") {
-          setMemberID(+e.target.value);
-        } else {
-          setMemberID(e.target.value);
-          setErrorMessage("Please put a valid ID number");
-        }
+      case "searchInput":
+        setSearchInput(e.target.value);
+        setIsSearching(true);
+        updateSuggestions(e);
         break;
     }
   };
 
   const handleClick = () => {
-    setIsAddingMember(false)
+    setIsAddingMember(false);
   };
 
   const selectedChannel =
@@ -35,6 +36,33 @@ const Popup2 = ({ setIsAddingMember }) => {
       : channels[0].filter((channel) => {
           return channel.selected === true;
         });
+
+  const passEmail = (user) => {
+    const selectedEmail = users[0].filter((account) => {
+      return account.email === user;
+    });
+    setSearchInput(selectedEmail[0].email);
+    setIsSearching(false);
+    setSuggestions([]);
+  };
+
+  const updateSuggestions = (e) => {
+    let emails = [];
+    let suggestions = [];
+
+    emails =
+      users.length > 0
+        ? users[0].map((user) => {
+            return user.email;
+          })
+        : [];
+
+    suggestions = emails.filter((email) => {
+      return email.includes(searchInput.toString());
+    });
+
+    setSuggestions(suggestions);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +78,7 @@ const Popup2 = ({ setIsAddingMember }) => {
     })
       .then((response) => {
         console.log(response);
-        navigate("/slack-app/dashboard");
+        setIsAddingMember(false);
       })
       .catch((error) => {
         console.log(error);
@@ -71,12 +99,26 @@ const Popup2 = ({ setIsAddingMember }) => {
           <h1>Add a member to {selectedChannel[0].name}:</h1>
           <form className="popup2-form" onSubmit={onSubmit}>
             <input
+              autoComplete="off"
               type="text"
-              id="memberID"
+              id="searchInput"
+              value={searchInput}
               placeholder="member-ID's"
-              value={memberID}
               onChange={handleChange}
             ></input>
+            {isSearching && (
+              <div className="search-drop-down-add-secondary">
+                {suggestions.map((user) => (
+                  <p
+                    className="search-users-channel"
+                    key={uuidv4()}
+                    onClick={() => passEmail(user)}
+                  >
+                    {user}
+                  </p>
+                ))}
+              </div>
+            )}
             <span>{errorMessage}</span>
             <button className="popup2-submit">Add Member/s</button>
           </form>
