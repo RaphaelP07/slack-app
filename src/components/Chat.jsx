@@ -114,7 +114,10 @@ const Chat = () => {
                 messages[messages.indexOf(message)-1].sender.email) ?
                 '' : 
                 <div className="message-sender">
-                  <h4>{message.sender.email}</h4>
+                  <div className="disable-highlight sender-icon">
+                    {message.sender.email.split("")[0]}
+                  </div>
+                  <h4 className="sender-name">{message.sender.email}</h4>
                 </div>}
                 <div className={`message-body-container 
                 ${message.sender.email === 

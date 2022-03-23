@@ -367,6 +367,22 @@ body {
 
 .message-sender {
   margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.sender-name {
+  margin-left: 5px;
+}
+
+.sender-icon {
+  background-color: rgb(164, 165, 83);
+  height: 19px;
+  min-width: 19px;
+  display: grid;
+  place-content: center;
+  border-radius: 3px;
+  color: white;
 }
 
 .search-header-container {
