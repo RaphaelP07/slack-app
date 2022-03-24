@@ -25,7 +25,11 @@ const Chat = () => {
     }
   }, [users.length]);
 
-  const receivers = getCompleted && users[0].concat(channels[0]);
+  // const receivers = getCompleted && users[0].concat(channels[0]);
+  const receivers =
+    channels[0] !== undefined && channels[0].length > 0
+      ? getCompleted && users[0].concat(channels[0])
+      : getCompleted && users[0];
 
   const receiver =
     getCompleted &&

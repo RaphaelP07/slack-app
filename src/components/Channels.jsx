@@ -66,7 +66,13 @@ const Channels = () => {
         )}
       </div>
       <div className="side-bar-channels">
-        {!showChannels && channels.length > 0
+        {channels[0] === undefined
+          ? !showChannels && (
+              <p className="loading">
+                You have not created or joined a channel yet.
+              </p>
+            )
+          : !showChannels && channels.length > 0 && channels !== undefined
           ? channels[0].map((channel) => (
               <div
                 key={channel.id}
@@ -84,6 +90,24 @@ const Channels = () => {
               </div>
             ))
           : !showChannels && <p className="loading">loading channels...</p>}
+        {/* {!showChannels && channels.length > 0 && channels !== undefined
+          ? channels[0].map((channel) => (
+              <div
+                key={channel.id}
+                className={`channel-container ${
+                  channel.selected === true ? "selected" : ""
+                }`}
+                onClick={() => select(channel)}
+                title={channel.name}
+              >
+                <div className="disable-highlight profile-icon">
+                  {channel.name.split("")[0]}
+                </div>
+                <p className="disable-highlight user">{channel.name}</p>
+                <FontAwesomeIcon icon={faXmark} className="x-icon" />
+              </div>
+            ))
+          : !showChannels && <p className="loading">loading channels...</p>} */}
         {isCreatingChannel && (
           <Popup setIsCreatingChannel={setIsCreatingChannel} />
         )}

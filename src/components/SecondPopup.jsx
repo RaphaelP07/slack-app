@@ -123,7 +123,6 @@ const SecondPopup = ({ setIsAddingMember }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setMemberID(memberAccount[0][0].id);
 
     axios({
       method: "post",
@@ -135,11 +134,13 @@ const SecondPopup = ({ setIsAddingMember }) => {
       },
     })
       .then((response) => {
-        console.log(response.data.errors[0]);
-        console.log(selectedChannelID);
-        console.log(memberID);
         setSearchInput("");
-        setErrorMessage(response.data.errors[0]);
+        // setErrorMessage(response.data.errors[0]);
+        {
+          response.data.errors
+            ? setErrorMessage(response.data.errors[0])
+            : setErrorMessage("");
+        }
         // setIsAddingMember(false);
 
         axios({
