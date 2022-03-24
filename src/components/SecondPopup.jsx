@@ -31,7 +31,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
       // console.log(res);
       setCurrentMembers(res.data.data.channel_members);
     });
-  }, []);
+  }, [currentMembers]);
   //   console.log(currentMembers);
 
   const addCurrentMembers = currentMembers.forEach((member) => {
