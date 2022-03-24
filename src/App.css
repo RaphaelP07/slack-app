@@ -114,12 +114,12 @@ body {
 }
 
 .side-bar-direct-messages {
-  overflow: scroll;
-  height: auto;
+  overflow: auto;
+  max-height: 45vh;
 }
 
 .side-bar-channels {
-  /* overflow: scroll; */
+  overflow: auto;
   max-height: 45vh;
 }
 
@@ -608,6 +608,10 @@ img {
 
 .form-container-setup {
   margin-top: 3rem;
+}
+
+.form-container span {
+  color: red;
 }
 
 form {

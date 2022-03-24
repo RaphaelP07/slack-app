@@ -1,35 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faXmark,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { GlobalContext } from "../context/GlobalState";
-import Popup from "./Popup";
-import axios from "axios";
+import React, { useContext, useState, useEffect } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCaretDown, faXmark, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { GlobalContext } from "../context/GlobalState"
+import Popup from "./Popup"
+import axios from "axios"
 
 const Channels = () => {
   const { channels, selectChat, baseURL, headers, retrieveMessages } =
-    useContext(GlobalContext);
-  const [rerender, setRerender] = useState(false);
-  const [showChannels, setShowChannels] = useState(false);
-  const [isCreatingChannel, setIsCreatingChannel] = useState(false);
-
-  useEffect(() => {
-    return;
-  }, [rerender]);
+    useContext(GlobalContext)
+  const [rerender, setRerender] = useState(false)
+  const [showChannels, setShowChannels] = useState(false)
+  const [isCreatingChannel, setIsCreatingChannel] = useState(false)
 
   const select = (channel) => {
-    channel.selected = true;
-    setRerender(!rerender);
-    selectedMessages(channel.id);
-    selectChat(channel.id);
-  };
+    channel.selected = true
+    selectedMessages(channel.id)
+    selectChat(channel.id)
+  }
 
   const showPopup = () => {
-    setIsCreatingChannel(true);
-  };
+    setIsCreatingChannel(true)
+  }
 
   const selectedMessages = (id) => {
     axios({
@@ -39,9 +30,9 @@ const Channels = () => {
       receiver_id: id,
       receiver_class: "Channel",
     }).then((res) => {
-      retrieveMessages(res.data.data);
-    });
-  };
+      retrieveMessages(res.data.data)
+    })
+  }
 
   return (
     <>
@@ -109,11 +100,15 @@ const Channels = () => {
             ))
           : !showChannels && <p className="loading">loading channels...</p>} */}
         {isCreatingChannel && (
-          <Popup setIsCreatingChannel={setIsCreatingChannel} />
+          <Popup
+            setIsCreatingChannel={setIsCreatingChannel}
+            setRerender={setRerender}
+            rerender={rerender}
+          />
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Channels;
+export default Channels

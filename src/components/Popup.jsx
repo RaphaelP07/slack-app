@@ -1,79 +1,79 @@
-import { useState, useContext } from "react";
-import { GlobalContext } from "../context/GlobalState";
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useContext } from "react"
+import { GlobalContext } from "../context/GlobalState"
+import axios from "axios"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { v4 as uuidv4 } from "uuid"
 
 const Popup = ({ loggedID, setIsCreatingChannel }) => {
-  const { baseURL, headers, users, addChannel } = useContext(GlobalContext);
-  const [channelName, setChannelName] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-  const [channelMembers, setChannelMembers] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
-  const memberAccounts = [];
-  const ID = parseInt(loggedID);
+  const { baseURL, headers, users, addChannel2 } = useContext(GlobalContext)
+  const [channelName, setChannelName] = useState("")
+  const [searchInput, setSearchInput] = useState("")
+  const [channelMembers, setChannelMembers] = useState([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
+  const [errorMessage, setErrorMessage] = useState("")
+  const memberAccounts = []
 
   const handleChange = (e) => {
     switch (e.target.id) {
       case "channelName":
-        setChannelName(e.target.value);
-        break;
+        setChannelName(e.target.value)
+        break
       case "searchInput":
-        setSearchInput(e.target.value);
-        setIsSearching(true);
-        updateSuggestions(e);
-        break;
+        setSearchInput(e.target.value)
+        setIsSearching(true)
+        updateSuggestions(e)
+        break
     }
-  };
+  }
 
   const updateSuggestions = (e) => {
-    let emails = [];
-    let suggestions = [];
+    let emails = []
+    let suggestions = []
 
     emails =
       users.length > 0
         ? users[0].map((user) => {
-            return user.email;
+            return user.email
           })
-        : [];
+        : []
 
     suggestions = emails.filter((email) => {
-      return email.includes(searchInput.toString());
-    });
+      return email.includes(searchInput.toString())
+    })
 
-    setSuggestions(suggestions);
-  };
+    setSuggestions(suggestions)
+  }
 
   const passEmail = (user) => {
     const selectedEmail = users[0].filter((account) => {
-      return account.email === user;
-    });
-    setSearchInput(selectedEmail[0].email);
-    setIsSearching(false);
-    setSuggestions([]);
-  };
+      return account.email === user
+    })
+    setSearchInput(selectedEmail[0].email)
+    setIsSearching(false)
+    setSuggestions([])
+  }
 
   const addMember = () => {
-    setChannelMembers([...channelMembers, searchInput]);
-    setSearchInput("");
-  };
+    setChannelMembers([...channelMembers, searchInput])
+    setSearchInput("")
+  }
 
   const addUser = channelMembers.forEach((member) => {
     memberAccounts.push(
       users[0].filter((user) => {
-        return user.email === member;
+        return user.email === member
       })
-    );
-  });
+    )
+  })
 
   const memberIDs = memberAccounts.map((member) => {
-    return member[0].id;
-  });
+    return member[0].id
+  })
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     // console.log(memberIDs)
 
     axios({
@@ -86,31 +86,36 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
       },
     })
       .then((response) => {
-        console.log(response);
-        setIsCreatingChannel(false);
+        if (response.data.errors) {
+          setErrorMessage("Channel name has already been taken")
+          return
+        } else {
+          setErrorMessage("")
+          setIsCreatingChannel(false)
+          addChannel2(response.data.data)
+        }
 
         axios({
           method: "get",
           url: `${baseURL}/channels`,
           headers: headers,
         }).then((res) => {
-          addChannel(res.data.data);
-        });
-        window.location.reload(); //temporary solution
+          // console.log(res.data.data);
+        })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
   const handleXClick = () => {
-    setIsCreatingChannel(false);
-  };
+    setIsCreatingChannel(false)
+  }
 
   const cancelSearch = () => {
-    setIsSearching(false);
-    setSuggestions([]);
-  };
+    setIsSearching(false)
+    setSuggestions([])
+  }
 
   return (
     <div className="popup-wrapper" onClick={cancelSearch}>
@@ -172,6 +177,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
                     </span>
                   ))}
               </div>
+              {errorMessage && <span>{errorMessage}</span>}
               <button className="btn-login" type="submit">
                 Create Channel
               </button>
@@ -180,7 +186,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Popup;
+export default Popup

@@ -10,6 +10,11 @@ export default (state, action) => {
         ...state,
         channels: [...state.channels, action.payload],
       };
+    case "ADD_CHANNEL_2":
+      state.channels[0].push(action.payload);
+      return {
+        ...state,
+      };
     case "SELECT_CHAT":
       if (state.channels[0] !== undefined && state.channels[0].length > 0) {
         const newChannels = state.channels[0];
