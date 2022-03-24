@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
-// import Popup2 from "./Popup2";
 import SecondPopup from "./SecondPopup";
 import axios from "axios";
 
@@ -93,7 +92,7 @@ const Chat = () => {
                   className="add-member"
                   onClick={() => setIsAddingMember(true)}
                 >
-                  <FontAwesomeIcon icon={faPlus} />
+                  <FontAwesomeIcon icon={faPlus} className='+-icon' />
                 </button>
               ) : (
                 ""

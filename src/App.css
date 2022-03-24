@@ -230,8 +230,9 @@ body {
 .add-member {
   background-color: transparent;
   color: rgb(7, 7, 7);
+  width: 17px;
   border: 0.3px solid rgba(70, 69, 69, 0.151);
-  border-radius: 3px;
+  border-radius: 50px;
   font-size: 0.7rem;
   padding: 2px;
   margin-left: 10px;
@@ -239,7 +240,7 @@ body {
 }
 
 .add-member:hover {
-  background-color: rgb(77, 148, 253);
+  background-color: rgb(149, 192, 255);
 }
 
 .add-member:active {
@@ -921,7 +922,7 @@ form div span {
   display: flex;
   align-items: center;
   padding-left: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 
 .secondary-popup-lower-member-list {
@@ -932,6 +933,7 @@ form div span {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   text-align: center;
   align-items: center;
+  margin-bottom: 10px
 }
 
 .search-drop-down-add-secondary-popup {
