@@ -1,9 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPaperPlane,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
-import Popup2 from './Popup2'
+// import Popup2 from "./Popup2";
+import SecondPopup from "./SecondPopup";
 import axios from "axios";
 
 const Chat = () => {
@@ -11,7 +16,7 @@ const Chat = () => {
     useContext(GlobalContext);
   const [getCompleted, setGetCompleted] = useState(false);
   const [messageInput, setMessageInput] = useState("");
-  const [isAddingMember, setIsAddingMember] = useState(false)
+  const [isAddingMember, setIsAddingMember] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,15 +89,17 @@ const Chat = () => {
                   : receiver[0].name}
               </strong>
               {receiverClass === "Channel" ? (
-                <button className="add-member" onClick={() => setIsAddingMember(true)}>
+                <button
+                  className="add-member"
+                  onClick={() => setIsAddingMember(true)}
+                >
                   <FontAwesomeIcon icon={faPlus} />
-                  MEMBER
                 </button>
               ) : (
                 ""
               )}
               {isAddingMember && (
-                <Popup2 setIsAddingMember={setIsAddingMember}/>
+                <SecondPopup setIsAddingMember={setIsAddingMember} />
               )}
             </>
           )}

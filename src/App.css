@@ -153,10 +153,10 @@ body {
   color: white;
 }
 
-.cut-text { 
+.cut-text {
   text-overflow: ellipsis;
-  overflow: hidden; 
-  width: 260px; 
+  overflow: hidden;
+  width: 260px;
   white-space: nowrap;
 }
 
@@ -228,12 +228,13 @@ body {
 }
 
 .add-member {
-  background-color: rgb(31, 93, 187);
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: rgb(7, 7, 7);
+  border: 0.3px solid rgba(70, 69, 69, 0.151);
   border-radius: 3px;
-  padding: 5px;
-  margin-right: 10px;
+  font-size: 0.7rem;
+  padding: 2px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -360,6 +361,17 @@ body {
   max-height: 180px;
   z-index: 0;
   position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.459);
+  overflow: scroll;
+  border-radius: 4px;
+}
+
+.search-drop-down-add-secondary {
+  background-color: white;
+  width: 525px;
+  max-height: 180px;
+  z-index: 0;
+  position: relative;
   border: 1px solid rgba(0, 0, 0, 0.459);
   overflow: scroll;
   border-radius: 4px;
@@ -796,4 +808,138 @@ form div span {
 
 .right-search-header {
   width: 29.5vw;
+  
+.popup-wrapper-2 {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #1d1c1d54;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-popup-container {
+  width: 1000px;
+  max-height: 650px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.secondary-popup-upper {
+  width: 1000px;
+  height: 325px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+
+.secondary-popup-upper-header {
+  width: 100%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.secondary-popup-header h1 {
+  padding: 5px;
+}
+
+.secondary-popup-x {
+  font-size: 1.5rem;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+.secondary-popup-form {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-popup-form input {
+  width: 575px;
+  border-radius: 4px;
+}
+
+.secondary-popup-plus {
+  color: rgb(100, 98, 98);
+  cursor: pointer;
+  position: relative;
+  left: 260px;
+  bottom: 30px;
+}
+
+.secondary-popup-email-list {
+  margin-top: 5px;
+  width: 575px;
+  height: 20px;
+  color: rgb(100, 98, 98);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.secondary-popup-button {
+  width: 575px;
+  color: #fff;
+  background-color: #6a1e6b;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 400;
+  height: 44px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.secondary-popup-lower {
+  width: 1000px;
+  min-height: 100px;
+  max-height: 325px;
+  padding: 10px;
+}
+
+.secondary-popup-lower-header {
+  width: 990px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
+.secondary-popup-lower-member-list {
+  width: 100%;
+  min-height: 30px;
+  max-height: 285px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  text-align: center;
+  align-items: center;
+}
+
+.search-drop-down-add-secondary-popup {
+  background-color: white;
+  width: 100%;
+  max-height: 180px;
+  z-index: 0;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.459);
+  overflow-y: scroll;
+  border-radius: 4px;
 }
