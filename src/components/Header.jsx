@@ -69,22 +69,28 @@ const Header = () => {
 
   return (
     <header className='dashboard-header'>
-      <div className="logo-container">
-          <img src={logo} className="slack-logo" alt="slack-logo" onClick={() => window.location.reload()}/>
+      <div className="logo-search-container">
+        <img src={logo} className="slack-logo" alt="slack-logo" onClick={() => window.location.reload()}/>
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
       <div className="search-header-container">
-        <FontAwesomeIcon icon={faSearch} className="search-icon" />
-        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' value={searchInput} onClick={() => setIsSearching(true)} onChange={(e) => updateSuggestions(e) }/>
+        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' value={searchInput} onClick={() => setIsSearching(true)} onBlur={() => setIsSearching(false)} onChange={(e) => updateSuggestions(e) }/>
         {isSearching && 
-          <div className="search-drop-down">
-            {suggestions.map((user) => (
-              <p className="search-users" key={uuidv4()} onClick={() => passEmail(user)} >{user}</p>
-            ))}
+          <div className="search-header-drop-down">
+            <div className="left-search-header"></div>
+            <div className="search-drop-down">
+              {suggestions.map((user) => (
+                <p className="search-users" key={uuidv4()} onClick={() => passEmail(user)} >{user}</p>
+              ))}
+            </div>
+            <div className="right-search-header"></div>
           </div>}
       </div>
-      <Link to="/slack-app">
-        <button className='sign-out' onClick={signOutClear}>Sign Out</button>
-      </Link>
+      <div className="sign-out-container">
+        <Link to="/slack-app">
+          <button className='sign-out' onClick={signOutClear}>Sign Out</button>
+        </Link>
+      </div>
     </header>
   )
 }

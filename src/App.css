@@ -42,23 +42,8 @@ body {
   grid-row-end: 2;
 }
 
-.logo-container {
-  height: 38px;
-  width: 120px;
-  cursor: pointer;
-}
-
-.floating-icon:hover,
-.logo-container:hover {
+.floating-icon:hover {
   background-color: rgb(78, 43, 82);
-  cursor: pointer;
-}
-
-.slack-logo {
-  position: absolute;
-  top: 8px;
-  left: 12px;
-  width: 90px;
   cursor: pointer;
 }
 
@@ -242,13 +227,6 @@ body {
   cursor: pointer;
 }
 
-.dashboard-header {
-  display: flex;
-  color: aliceblue;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .add-member {
   background-color: rgb(31, 93, 187);
   color: white;
@@ -265,24 +243,6 @@ body {
 
 .add-member:active {
   background-color: rgb(31, 93, 187);
-}
-
-.sign-out {
-  background-color: rgb(168, 0, 0);
-  color: white;
-  border: none;
-  border-radius: 3px;
-  padding: 5px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.sign-out:hover {
-  background-color: rgb(201, 67, 67);
-}
-
-.sign-out:active {
-  background-color: rgb(168, 0, 0);
 }
 
 .rotate {
@@ -385,42 +345,11 @@ body {
   color: white;
 }
 
-.search-header-container {
-  display: flex;
-  align-items: center;
-}
-
-.search-header {
-  width: 40vw;
-  border-radius: 8px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 1px;
-  height: 25px;
-  text-align: center;
-  background-color: rgb(128, 115, 129);
-  border: 1px solid rgb(0, 0, 0);
-  z-index: 1;
-  color: white;
-}
-
-.search-header::placeholder {
-  color: rgb(199, 199, 199);
-}
-
-.search-icon {
-  margin-right: 10px;
-  margin-top: 2px;
-}
-
 .search-drop-down {
   background-color: white;
   width: 39vw;
   max-height: 400px;
-  top: 31px;
-  left: 550px;
   z-index: 0;
-  position: absolute;
   border: 1px solid rgba(0, 0, 0, 0.459);
   overflow: scroll;
 }
@@ -778,4 +707,93 @@ form div span {
 .loading {
   margin-left: 35px;
   font-size: 14px;
+}
+
+.dashboard-header {
+  display: flex;
+  color: aliceblue;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-search-container {
+  height: 38px;
+  width: 30vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slack-logo {
+  margin-left: 12px;
+  width: 90px;
+  cursor: pointer;
+}
+
+.search-header-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-header {
+  width: 40vw;
+  border-radius: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 1px;
+  height: 25px;
+  text-align: center;
+  background-color: rgb(128, 115, 129);
+  border: 1px solid rgb(0, 0, 0);
+  z-index: 1;
+  color: white;
+}
+
+.search-header::placeholder {
+  color: rgb(199, 199, 199);
+}
+
+.search-icon {
+  margin-right: 10px;
+}
+
+.sign-out-container {
+  width: 30vw;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sign-out {
+  background-color: rgb(168, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.sign-out:hover {
+  background-color: rgb(201, 67, 67);
+}
+
+.sign-out:active {
+  background-color: rgb(168, 0, 0);
+}
+
+.search-header-drop-down {
+  display: flex;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  justify-content: space-between;
+  z-index: -1;
+}
+
+.left-search-header {
+  width: 30.5vw;
+}
+
+.right-search-header {
+  width: 29.5vw;
 }
