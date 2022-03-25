@@ -13,6 +13,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [currentMembers, setCurrentMembers] = useState([]);
   const [memberID, setMemberID] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const memberAccount = [];
   const currentUsers = [];
   const currentUserAccounts = [];
@@ -30,7 +31,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
       // console.log(res);
       setCurrentMembers(res.data.data.channel_members);
     });
-  }, []);
+  }, [currentMembers]);
   //   console.log(currentMembers);
 
   const addCurrentMembers = currentMembers.forEach((member) => {
@@ -67,6 +68,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
         setSearchInput(e.target.value);
         setIsSearching(true);
         updateSuggestions(e);
+        setErrorMessage("");
         break;
     }
   };
@@ -121,7 +123,6 @@ const SecondPopup = ({ setIsAddingMember }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setMemberID(memberAccount[0][0].id);
 
     axios({
       method: "post",
@@ -133,10 +134,13 @@ const SecondPopup = ({ setIsAddingMember }) => {
       },
     })
       .then((response) => {
-        console.log(response);
-        console.log(selectedChannelID);
-        console.log(memberID);
         setSearchInput("");
+        // setErrorMessage(response.data.errors[0]);
+        {
+          response.data.errors
+            ? setErrorMessage(response.data.errors[0])
+            : setErrorMessage("");
+        }
         // setIsAddingMember(false);
 
         axios({
@@ -189,6 +193,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
               </div>
             )}
             <button className="secondary-popup-button">ADD MEMBER</button>
+            {errorMessage && <span>{errorMessage}</span>}
           </form>
         </div>
         <div className="secondary-popup-lower">

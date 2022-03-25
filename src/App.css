@@ -99,12 +99,12 @@ body {
 }
 
 .side-bar-direct-messages {
-  overflow: scroll;
-  height: auto;
+  overflow: auto;
+  max-height: 45vh;
 }
 
 .side-bar-channels {
-  /* overflow: scroll; */
+  overflow: auto;
   max-height: 45vh;
 }
 
@@ -304,11 +304,11 @@ body {
 
 .border-bottom {
   border-bottom: 1px solid rgb(226, 226, 226);
-  padding-bottom: 10px
+  padding-bottom: 10px;
 }
 
 .message-body-container:hover > .message-date {
-  display: block
+  display: block;
 }
 
 .message-date {
@@ -319,7 +319,7 @@ body {
   margin-left: 10px;
   position: relative;
   top: 1px;
-  display: none
+  display: none;
 }
 
 .message-body {
@@ -537,6 +537,10 @@ img {
 
 .form-container-setup {
   margin-top: 3rem;
+}
+
+.form-container span {
+  color: red;
 }
 
 form {
@@ -876,6 +880,11 @@ form div span {
 .secondary-popup-form input {
   width: 575px;
   border-radius: 4px;
+}
+
+.secondary-popup-form span {
+  margin-top: 5px;
+  color: red;
 }
 
 .secondary-popup-plus {

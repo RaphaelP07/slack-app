@@ -35,6 +35,13 @@ export const GlobalProvider = ({ children, headers }) => {
     });
   }
 
+  function addChannel2(channel) {
+    dispatch({
+      type: "ADD_CHANNEL_2",
+      payload: channel,
+    });
+  }
+
   function selectChat(id) {
     dispatch({
       type: "SELECT_CHAT",
@@ -49,14 +56,14 @@ export const GlobalProvider = ({ children, headers }) => {
     });
   }
 
-  function retrieveMessages (messages) {
+  function retrieveMessages(messages) {
     dispatch({
       type: "RETRIEVE_MESSAGES",
       payload: messages,
     });
   }
 
-  function clearStates () {
+  function clearStates() {
     dispatch({
       type: "CLEAR_STATES",
     });
@@ -74,8 +81,9 @@ export const GlobalProvider = ({ children, headers }) => {
         selectChat,
         setHeaders,
         addChannel,
+        addChannel2,
         retrieveMessages,
-        clearStates
+        clearStates,
       }}
     >
       {children}

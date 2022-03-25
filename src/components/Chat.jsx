@@ -1,47 +1,51 @@
-import React, { useContext, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useContext, useState, useEffect } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faPlus,
   faPaperPlane,
   faCaretDown,
-} from "@fortawesome/free-solid-svg-icons";
-import { GlobalContext } from "../context/GlobalState";
-import { useNavigate } from "react-router-dom";
+} from "@fortawesome/free-solid-svg-icons"
+import { GlobalContext } from "../context/GlobalState"
+import { useNavigate } from "react-router-dom"
 // import Popup2 from "./Popup2";
-import SecondPopup from "./SecondPopup";
-import axios from "axios";
+import SecondPopup from "./SecondPopup"
+import axios from "axios"
 
 const Chat = () => {
   const { users, channels, messages, baseURL, headers, retrieveMessages } =
-    useContext(GlobalContext);
-  const [getCompleted, setGetCompleted] = useState(false);
-  const [messageInput, setMessageInput] = useState("");
-  const [isAddingMember, setIsAddingMember] = useState(false);
-  const navigate = useNavigate();
+    useContext(GlobalContext)
+  const [getCompleted, setGetCompleted] = useState(false)
+  const [messageInput, setMessageInput] = useState("")
+  const [isAddingMember, setIsAddingMember] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (users.length > 0) {
-      setGetCompleted(true);
+      setGetCompleted(true)
     }
-  }, [users.length]);
+  }, [users.length])
 
-  const receivers = getCompleted && users[0].concat(channels[0]);
+  // const receivers = getCompleted && users[0].concat(channels[0]);
+  const receivers =
+    channels[0] !== undefined && channels[0].length > 0
+      ? getCompleted && users[0].concat(channels[0])
+      : getCompleted && users[0]
 
   const receiver =
     getCompleted &&
     receivers.filter((receiver) => {
-      return receiver.selected === true;
-    });
+      return receiver.selected === true
+    })
 
   const receiverClass =
     receiver === false || receiver.length === 0
       ? ""
       : receiver[0].hasOwnProperty("email")
       ? "User"
-      : "Channel";
+      : "Channel"
 
   const sendMessage = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     axios({
       method: "post",
@@ -62,11 +66,11 @@ const Chat = () => {
           receiver_class: receiverClass,
           body: messageInput,
         },
-      }).then((res) => retrieveMessages(res.data.data));
-    });
+      }).then((res) => retrieveMessages(res.data.data))
+    })
 
-    setMessageInput("");
-  };
+    setMessageInput("")
+  }
 
   return (
     <div className="chat-container">
@@ -78,11 +82,11 @@ const Chat = () => {
             ""
           ) : (
             <>
-              <div className="profile-icon">
+              {/* <div className="profile-icon">
                 {receiver[0].hasOwnProperty("email") === true
                   ? receiver[0].email.split("")[0]
                   : receiver[0].name.split("")[0]}
-              </div>
+              </div> */}
               <strong className="user chat-header-name">
                 {receiver[0].hasOwnProperty("email") === true
                   ? receiver[0].email
@@ -115,23 +119,30 @@ const Chat = () => {
                 key={messages.indexOf(message)}
                 className="message-container"
               >
-                {message.sender.email === 
-                (messages[messages.indexOf(message)-1] === undefined ? 
-                messages[messages.indexOf(message)].receiver.email : 
-                messages[messages.indexOf(message)-1].sender.email) ?
-                '' : 
-                <div className="message-sender">
-                  <div className="disable-highlight sender-icon">
-                    {message.sender.email.split("")[0]}
+                {message.sender.email ===
+                (messages[messages.indexOf(message) - 1] === undefined
+                  ? messages[messages.indexOf(message)].receiver.email
+                  : messages[messages.indexOf(message) - 1].sender.email) ? (
+                  ""
+                ) : (
+                  <div className="message-sender">
+                    <div className="disable-highlight sender-icon">
+                      {message.sender.email.split("")[0]}
+                    </div>
+                    <h4 className="sender-name">{message.sender.email}</h4>
                   </div>
-                  <h4 className="sender-name">{message.sender.email}</h4>
-                </div>}
-                <div className={`message-body-container 
-                ${message.sender.email === 
-                (messages[messages.indexOf(message)+1] === undefined ? 
-                messages[messages.indexOf(message)].receiver.email : 
-                messages[messages.indexOf(message)+1].sender.email) ?
-                '' : 'border-bottom'}`}>
+                )}
+                <div
+                  className={`message-body-container 
+                ${
+                  message.sender.email ===
+                  (messages[messages.indexOf(message) + 1] === undefined
+                    ? messages[messages.indexOf(message)].receiver.email
+                    : messages[messages.indexOf(message) + 1].sender.email)
+                    ? ""
+                    : "border-bottom"
+                }`}
+                >
                   <p className="message-body">{message.body}</p>
                   <p className="message-date">
                     {message.created_at.slice(11, 16)},{" "}
@@ -157,7 +168,7 @@ const Chat = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat
