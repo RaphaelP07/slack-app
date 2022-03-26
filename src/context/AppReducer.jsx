@@ -10,13 +10,20 @@ export default (state, action) => {
         ...state,
         channels: [...state.channels, action.payload],
       };
+    case "ADD_CHANNEL_2":
+      state.channels[0].push(action.payload);
+      return {
+        ...state,
+      };
     case "SELECT_CHAT":
-      const newChannels = state.channels[0];
-      newChannels.forEach((channel) => {
-        if (channel.id !== action.payload) {
-          channel.selected = false;
-        }
-      });
+      if (state.channels[0] !== undefined && state.channels[0].length > 0) {
+        const newChannels = state.channels[0];
+        newChannels.forEach((channel) => {
+          if (channel.id !== action.payload) {
+            channel.selected = false;
+          }
+        });
+      }
       const newUsers = state.users[0];
       newUsers.forEach((user) => {
         if (user.id !== action.payload) {
@@ -41,8 +48,8 @@ export default (state, action) => {
         users: [],
         channels: [],
         messages: [],
-        headers: {}
-      }
+        headers: {},
+      };
     default:
       return state;
   }
