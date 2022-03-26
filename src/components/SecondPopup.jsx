@@ -34,12 +34,12 @@ const SecondPopup = ({ setIsAddingMember }) => {
   }, [currentMembers]);
   //   console.log(currentMembers);
 
-  const addCurrentMembers = currentMembers.forEach((member) => {
+  currentMembers.forEach((member) => {
     currentUsers.push(member.user_id);
   });
   //   console.log(currentUsers);
 
-  const searchUserAccounts = currentUsers.forEach((account) => {
+  currentUsers.forEach((account) => {
     currentUserAccounts.push(
       users[0].filter((user) => {
         return user.id === account;
@@ -49,7 +49,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
 
   //   console.log(currentUserAccounts);
 
-  const getCurrentUserEmail = currentUserAccounts.forEach((account) => {
+  currentUserAccounts.forEach((account) => {
     currentUserEmails.push(account[0].uid);
   });
 
@@ -72,7 +72,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
         break;
     }
   };
-
+  
   const updateSuggestions = (e) => {
     let emails = [];
     let suggestions = [];
@@ -183,7 +183,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
               <div className="search-drop-down-add-secondary-popup">
                 {suggestions.map((user) => (
                   <p
-                    className="search-users-channel"
+                    className="search-users-channel2"
                     key={uuidv4()}
                     onClick={() => passEmail(user)}
                   >
@@ -192,7 +192,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
                 ))}
               </div>
             )}
-            <button className="secondary-popup-button">ADD MEMBER</button>
+            {!isSearching && <button className="secondary-popup-button">ADD MEMBER</button>}
             {errorMessage && <span>{errorMessage}</span>}
           </form>
         </div>

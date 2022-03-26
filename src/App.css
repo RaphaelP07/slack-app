@@ -390,8 +390,16 @@ body {
   text-align: left;
 }
 
+.search-users-channel2 {
+  color: black;
+  padding-left: 10px;
+  display: flex;
+  text-align: left;
+}
+
 .search-users:hover,
-.search-users-channel:hover {
+.search-users-channel:hover,
+.search-users-channel2:hover {
   background-color: rgb(93, 144, 255);
   cursor: pointer;
 }
