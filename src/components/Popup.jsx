@@ -87,7 +87,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
     })
       .then((response) => {
         if (response.data.errors) {
-          setErrorMessage("Channel name has already been taken")
+          setErrorMessage(response.data.errors)
           return
         } else {
           setErrorMessage("")
@@ -172,9 +172,9 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
               <div className="channel-members-container">
                 {channelMembers.length > 0 &&
                   channelMembers.map((member) => (
-                    <span className="channel-members" key={member}>
+                    <p className="channel-members" key={member}>
                       {member},{" "}
-                    </span>
+                    </p>
                   ))}
               </div>
               {errorMessage && <span>{errorMessage}</span>}

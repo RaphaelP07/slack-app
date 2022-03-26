@@ -92,7 +92,6 @@ const Login = ({ setLoggedUser, setLoggedID }) => {
           <form onSubmit={onSubmit} noValidate>
             <div>
               <input
-                autoComplete="off"
                 required
                 type="email"
                 id="email"

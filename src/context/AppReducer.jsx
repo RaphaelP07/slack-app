@@ -11,7 +11,11 @@ export default (state, action) => {
         channels: [...state.channels, action.payload],
       };
     case "ADD_CHANNEL_2":
-      state.channels[0].push(action.payload);
+      if (state.channels[0] === undefined) {
+        state.channels[0] = [action.payload]
+      } else {
+        state.channels[0].push(action.payload);
+      }
       return {
         ...state,
       };

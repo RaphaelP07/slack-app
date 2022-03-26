@@ -75,7 +75,7 @@ const Header = () => {
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
       <div className="search-header-container">
-        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' value={searchInput} onClick={() => setIsSearching(true)} onBlur={() => setIsSearching(false)} onChange={(e) => updateSuggestions(e) }/>
+        <input type="text" className='search-header' placeholder='search user email' autoComplete='off' value={searchInput} onClick={() => setIsSearching(true)} onChange={(e) => updateSuggestions(e) }/>
         {isSearching && 
           <div className="search-header-drop-down">
             <div className="left-search-header"></div>

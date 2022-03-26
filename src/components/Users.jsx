@@ -65,7 +65,7 @@ const Users = () => {
                 {user.email.split("")[0]}
               </div>
               <p className="disable-highlight user cut-text">{user.email}</p>
-              <FontAwesomeIcon icon={faXmark} className="x-icon" />
+              {/* <FontAwesomeIcon icon={faXmark} className="x-icon" /> */}
             </div>
           )) : !showUsers &&
           <p className="loading">

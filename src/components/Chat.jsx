@@ -71,6 +71,12 @@ const Chat = () => {
     setMessageInput("")
   }
 
+  const enter = (e) => {
+    if (e.keyCode === 13) {
+      sendMessage(e)
+    }
+  }
+
   return (
     <div className="chat-container">
       {receiver.length === undefined ? (
@@ -160,6 +166,7 @@ const Chat = () => {
             placeholder="Message"
             value={messageInput}
             onChange={(e) => setMessageInput(e.target.value)}
+            onKeyUp={(e) => enter(e)}
           ></textarea>
           <button type="submit">
             <FontAwesomeIcon icon={faPaperPlane} className="chat-icon" />
