@@ -1,23 +1,23 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext, useEffect } from "react";
-import { GlobalContext } from "../context/GlobalState";
-import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { useState, useContext, useEffect } from "react"
+import { GlobalContext } from "../context/GlobalState"
+import axios from "axios"
+import { v4 as uuidv4 } from "uuid"
 
 const SecondPopup = ({ setIsAddingMember }) => {
   const { baseURL, headers, users, addChannel, channels } =
-    useContext(GlobalContext);
-  const [searchInput, setSearchInput] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
-  const [currentMembers, setCurrentMembers] = useState([]);
-  const [memberID, setMemberID] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const memberAccount = [];
-  const currentUsers = [];
-  const currentUserAccounts = [];
-  const currentUserEmails = [];
+    useContext(GlobalContext)
+  const [searchInput, setSearchInput] = useState("")
+  const [isSearching, setIsSearching] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
+  const [currentMembers, setCurrentMembers] = useState([])
+  const [memberID, setMemberID] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
+  const memberAccount = []
+  const currentUsers = []
+  const currentUserAccounts = []
+  const currentUserEmails = []
 
   useEffect(() => {
     axios({
@@ -28,101 +28,90 @@ const SecondPopup = ({ setIsAddingMember }) => {
         id: selectedChannelID,
       },
     }).then((res) => {
-      // console.log(res);
-      setCurrentMembers(res.data.data.channel_members);
-    });
-  }, [currentMembers]);
-  //   console.log(currentMembers);
+      setCurrentMembers(res.data.data.channel_members)
+    })
+  }, [])
 
   currentMembers.forEach((member) => {
-    currentUsers.push(member.user_id);
-  });
-  //   console.log(currentUsers);
+    currentUsers.push(member.user_id)
+  })
 
   currentUsers.forEach((account) => {
     currentUserAccounts.push(
       users[0].filter((user) => {
-        return user.id === account;
+        return user.id === account
       })
-    );
-  });
-
-  //   console.log(currentUserAccounts);
+    )
+  })
 
   currentUserAccounts.forEach((account) => {
-    currentUserEmails.push(account[0].uid);
-  });
-
-  // console.log(currentUserEmails);
+    currentUserEmails.push(account[0].uid)
+  })
 
   const selectedChannel =
     channels.length === 0
       ? ""
       : channels[0].filter((channel) => {
-          return channel.selected === true;
-        });
+          return channel.selected === true
+        })
 
   const handleChange = (e) => {
     switch (e.target.id) {
       case "searchInput":
-        setSearchInput(e.target.value);
-        setIsSearching(true);
-        updateSuggestions(e);
-        setErrorMessage("");
-        break;
+        setSearchInput(e.target.value)
+        setIsSearching(true)
+        updateSuggestions(e)
+        setErrorMessage("")
+        break
     }
-  };
-  
+  }
+
   const updateSuggestions = (e) => {
-    let emails = [];
-    let suggestions = [];
+    let emails = []
+    let suggestions = []
 
     emails =
       users.length > 0
         ? users[0].map((user) => {
-            return user.email;
+            return user.email
           })
-        : [];
+        : []
 
     suggestions = emails.filter((email) => {
-      return email.includes(searchInput.toString());
-    });
+      return email.includes(searchInput.toString())
+    })
 
-    setSuggestions(suggestions);
-  };
+    setSuggestions(suggestions)
+  }
 
   const passEmail = (user) => {
     const selectedEmail = users[0].filter((account) => {
-      return account.email === user;
-    });
-    setSearchInput(selectedEmail[0].email);
-    setIsSearching(false);
-    setSuggestions([]);
-  };
+      return account.email === user
+    })
+    setSearchInput(selectedEmail[0].email)
+    setIsSearching(false)
+    setSuggestions([])
+  }
 
   const addUser = memberAccount.push(
     users[0].filter((user) => {
-      return user.email === searchInput;
+      return user.email === searchInput
     })
-  );
-
-  // console.log(memberAccount);
+  )
 
   const handleXClick = () => {
-    setIsAddingMember(false);
-  };
+    setIsAddingMember(false)
+  }
 
   const cancelSearch = () => {
-    setIsSearching(false);
-    setSuggestions([]);
-  };
+    setIsSearching(false)
+    setSuggestions([])
+  }
 
-  const selectedChannelID = selectedChannel[0].id;
-
-  //   console.log(memberID);
+  const selectedChannelID = selectedChannel[0].id
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     axios({
       method: "post",
@@ -134,28 +123,26 @@ const SecondPopup = ({ setIsAddingMember }) => {
       },
     })
       .then((response) => {
-        setSearchInput("");
-        // setErrorMessage(response.data.errors[0]);
+        setSearchInput("")
         {
           response.data.errors
             ? setErrorMessage(response.data.errors[0])
-            : setErrorMessage("");
+            : setErrorMessage("")
         }
-        // setIsAddingMember(false);
 
         axios({
           method: "get",
           url: `${baseURL}/channels`,
           headers: headers,
         }).then((res) => {
-          addChannel(res.data.data);
-        });
-        // window.location.reload(); //temporary solution
+          addChannel(res.data.data)
+        })
+        setIsAddingMember(false)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
   return (
     <div className="popup-wrapper-2" onClick={cancelSearch}>
@@ -192,7 +179,9 @@ const SecondPopup = ({ setIsAddingMember }) => {
                 ))}
               </div>
             )}
-            {!isSearching && <button className="secondary-popup-button">ADD MEMBER</button>}
+            {!isSearching && (
+              <button className="secondary-popup-button">ADD MEMBER</button>
+            )}
             {errorMessage && <span>{errorMessage}</span>}
           </form>
         </div>
@@ -207,7 +196,7 @@ const SecondPopup = ({ setIsAddingMember }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SecondPopup;
+export default SecondPopup
