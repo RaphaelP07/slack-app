@@ -27,12 +27,9 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log(errors)
-
   useEffect(() => {
     if (isSubmitSuccessful) {
       const values = getValues();
-      console.log(values);
       axios
         .post(`${baseURL}/auth?`, {
           email: values.email,
