@@ -78,7 +78,7 @@ const Popup = ({ loggedID, setIsCreatingChannel }) => {
 
     axios({
       method: "post",
-      url: "http://206.189.91.54/api/v1/channels",
+      url: `${baseURL}/channels`,
       headers: headers,
       data: {
         name: channelName,
